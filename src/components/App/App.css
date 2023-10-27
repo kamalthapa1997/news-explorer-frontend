@@ -1,0 +1,22 @@
+.appBody {
+  max-width: 1440px;
+  margin: auto;
+  box-sizing: border-box;
+}
+@media (max-width: 767px) {
+  .appBody {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .appBody {
+    width: 100%;
+  }
+  /* Your tablet-specific CSS rules go here */
+}
+@media (min-width: 1024px) {
+  .appBody {
+    width: 100%;
+  }
+  /* Your laptop/desktop-specific CSS rules go here */
+}

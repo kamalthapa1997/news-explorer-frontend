@@ -1,0 +1,119 @@
+.mobilenavigationbar {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobilenavigationbar__menu {
+  gap: 16px;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  background: #1a1b22;
+}
+.mobilenavigationbar__heading {
+  height: 56px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-bottom: 1px solid white;
+}
+
+.mobilenavigationbar__title {
+  margin: 0;
+  color: var(--main-white, #fff);
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  width: 117px;
+}
+.mobilenavigationbar__infos {
+  width: 288px;
+  margin: 0 auto;
+  gap: 22px;
+  display: flex;
+  flex-direction: column;
+  max-width: 288px;
+
+  justify-content: center;
+}
+.mobilenavigationbar__home {
+  margin: 0;
+  color: var(--main-white, #fff);
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.mobilenavigationbar__signin {
+  height: 56px;
+  color: var(--main-white, #fff);
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  border: navajowhite;
+  border-radius: 100px;
+  background: #1a1b22;
+  border: 1px solid;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mobilenavigationbar__header {
+  display: flex;
+  flex-direction: column;
+  width: 288px;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: end;
+  gap: 16px;
+}
+.mobilenavigationbar__savednews-link {
+  text-decoration: none;
+}
+.mobilenavigationbar__saved-article {
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+.mobilenavigationbar__profile {
+  height: 30px;
+  border: 1px solid #fff;
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  gap: 6px;
+}
+.mobilenavigationbar__username {
+  color: #fff;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0;
+}
+.mobilenavigationbar__logout-btn {
+  height: 24px;
+  width: 24px;
+  border: none;
+  padding: 0;
+  background: url("../../images/logout.svg");
+}

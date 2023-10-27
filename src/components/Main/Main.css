@@ -1,0 +1,131 @@
+.main {
+  box-sizing: border-box;
+  padding-top: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: url("../../images/bgimage.png") no-repeat center;
+  width: 100%;
+  height: 576px;
+}
+.main__headings {
+  width: 608px;
+  margin: 0;
+  color: var(--main-white, #fff);
+  font-family: " Roboto Slab", sans-serif;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 64px;
+}
+.main__textcontent {
+  padding-top: 32px;
+  color: var(--main-white, #fff);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+  padding-bottom: 88px;
+}
+.main__search-form {
+  position: relative;
+
+  width: 608px;
+}
+.main__search-input {
+  border: none;
+  padding: 0;
+  border-radius: 100px;
+  height: 64px;
+  box-sizing: border-box;
+  padding: 21px 208px 21px 24px;
+  width: 608px;
+}
+.main__search-input::placeholder {
+  color: var(--simulator-gray-text, #b6bcbf);
+}
+.main__search-button {
+  width: 168px;
+  background: #2f71e5;
+  box-shadow: 0px 5px 15px 0px rgba(14, 26, 57, 0.2);
+  margin: 0;
+  padding: 0;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 64px;
+}
+
+@media (max-width: 767px) {
+  .main {
+    justify-content: flex-start;
+    padding-top: 86px;
+  }
+  .main__headings {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 40px;
+    width: 285px;
+  }
+  .main__textcontent {
+    font-size: 18px;
+    width: 288px;
+    padding: 16px 0 0 0;
+  }
+  .main__search-form {
+    padding-bottom: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 32px;
+    width: 288px;
+  }
+  .main__search-input {
+    width: 100%;
+    height: 56px;
+    padding: 0;
+    padding: 17px 16px;
+  }
+  .main__search-button {
+    width: 100%;
+    position: unset;
+    height: 56px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main__headings {
+    font-size: 36px;
+    line-height: 1.4;
+    width: 452px;
+  }
+  .main__textcontent {
+    width: 452px;
+  }
+  .main__search-form {
+    width: 452px;
+  }
+  .main__search-input {
+    width: 448px;
+    height: 56px;
+  }
+
+  .main__search-button {
+    width: 160px;
+    height: 56px;
+  }
+}
+@media (min-width: 1024px) {
+  .appBody {
+    width: 100%;
+  }
+  /* Your laptop/desktop-specific CSS rules go here */
+}
