@@ -22,7 +22,13 @@
 .navigationbar-border-black {
   border-bottom: 1px solid #000000;
 }
+.navigationbar__text-border-black {
+  border-bottom: 3px solid #000000;
+}
 
+.navigationbar__text-border-white {
+  border-bottom: 3px solid #fff;
+}
 .navigationbar__title-link {
   text-decoration: none;
 }
@@ -54,15 +60,13 @@
   font-weight: 500;
   line-height: 24px;
   transition: border 0.5s ease-in;
-}
-.navigationbar__homepage:hover {
-  border-bottom: 3px solid #fff;
+  cursor: pointer;
 }
 
 .navigationbar__login {
   height: 48px;
   place-items: center;
-
+  cursor: pointer;
   width: 176px;
   border-radius: 100px;
   border: 1px solid var(--main-white, #fff);
@@ -93,9 +97,7 @@
   align-items: center;
   transition: border 0.5s ease-in;
 }
-.navigationbar__saved-article:hover {
-  border-bottom: 3px solid #fff;
-}
+
 .navigationbar__username {
   color: var(--main-white, #fff);
   font-family: Roboto;
@@ -112,6 +114,7 @@
   height: 24px;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .navigationbar__logout-btn-dark {

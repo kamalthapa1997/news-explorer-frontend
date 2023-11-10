@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./NavigationBar.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import currentPageContext from "../../contexts/CurrentLocationContext";
+import { useContext } from "react";
+
 const NavigationBar = ({
   handleLoginModal,
   loggedIn,
   isSaved,
   menuBarOpen,
+  handlelogOut,
 }) => {
+  const { currentUserContextValue } = useContext(CurrentUserContext);
+  const currentPage = useContext(currentPageContext);
+
+  const currentUser = currentUserContextValue.currentUser;
+
   const setTextColor = isSaved
     ? "navigationbar__text-black"
     : ".navigationbar__text-white";
@@ -17,6 +27,20 @@ const NavigationBar = ({
 
   const setLogoutBtn = isSaved ? "navigationbar__logout-btn-dark" : "";
 
+  const setBorderColor =
+    currentPage.currentPage === "/articles"
+      ? isSaved
+        ? "navigationbar__text-border-black"
+        : "navigationbar__text-border-white"
+      : "";
+
+  const setHomeBorder =
+    currentPage.currentPage === "/"
+      ? isSaved
+        ? "navigationbar__text-border-black"
+        : "navigationbar__text-border-white"
+      : "";
+
   return (
     <div className={`navigationbar  ${setBorderButtom}`}>
       <Link className="navigationbar__title-link" to="/">
@@ -27,24 +51,34 @@ const NavigationBar = ({
       {loggedIn ? (
         <div className={`navigationbar__infos `}>
           <Link onClick={menuBarOpen} className="navigation__home-link" to="/">
-            <p className={`navigationbar__homepage ${setTextColor} `}>Home</p>{" "}
+            <p
+              className={`navigationbar__homepage ${setHomeBorder} ${setTextColor} `}
+            >
+              Home
+            </p>{" "}
           </Link>
-          <Link className="navigationbar__savednews-link" to="/saved-news">
-            <p className={`navigationbar__saved-article ${setTextColor}`}>
+          <Link className="navigationbar__savednews-link" to="/articles">
+            <p
+              className={`navigationbar__saved-article ${setBorderColor} ${setTextColor}`}
+            >
               {" "}
               Saved articles
             </p>
           </Link>
+
           <div className={`navigationbar__profile  ${setBorderRadius}`}>
-            <p className={`navigationbar__username ${setTextColor}`}>Elise</p>
+            <p className={`navigationbar__username ${setTextColor}`}>
+              {currentUser.name}
+            </p>
             <button
+              onClick={handlelogOut}
               className={`navigationbar__logout-btn ${setLogoutBtn}`}
             ></button>
           </div>
         </div>
       ) : (
         <div className={`navigationbar__infos `}>
-          <p className={`navigationbar__homepage `}>Home</p>
+          <p className={` navigationbar__homepage ${setHomeBorder}`}>Home</p>
           <p className="navigationbar__login" onClick={handleLoginModal}>
             {" "}
             Signin

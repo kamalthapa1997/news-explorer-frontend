@@ -1,13 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import SearchNewsContext from "../../contexts/SearchNewsContext";
-
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
 
 const SearchForm = ({ handleSearchNews }) => {
-  // const [searchInput, setSearchInput] = useState("");
   const { searchInput, setSearchInput } = useContext(SearchNewsContext);
-  const { savedKeyword } = useContext(SavedNewsKeywordContext);
-  console.log("savedKeyword", savedKeyword);
+  const { setSavedKeyword } = useContext(SavedNewsKeywordContext);
+
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
   };
@@ -15,7 +13,14 @@ const SearchForm = ({ handleSearchNews }) => {
     e.preventDefault();
     handleSearchNews(searchInput);
   };
-  // console.log(searchInput);
+
+  useEffect(() => {
+    if (searchInput) {
+      setSavedKeyword(searchInput);
+    } else {
+      setSavedKeyword("");
+    }
+  }, [searchInput, setSavedKeyword]);
 
   return (
     <>

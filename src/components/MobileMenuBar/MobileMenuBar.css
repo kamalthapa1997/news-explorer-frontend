@@ -1,5 +1,4 @@
 .mobilemenubar__icon {
-  background: url("../../images/mobilemenubar.svg") no-repeat center;
   border: none;
   position: absolute;
   width: 24px;
@@ -10,6 +9,13 @@
   top: 16px;
   transition: background 0.5s linear;
   visibility: hidden;
+}
+.mobilemenubar__icon-dark {
+  background: url("../../images/menu-dark.svg") no-repeat center;
+}
+
+.mobilemenubar__icon-white {
+  background: url("../../images/mobilemenubar.svg") no-repeat center;
 }
 @media (max-width: 767px) {
   .mobilemenubar__icon {

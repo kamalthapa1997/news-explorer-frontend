@@ -13,7 +13,6 @@ const PopupWithForm = ({
   handleModalClose,
   handleLoginModal,
 
-  isOpen,
   linkToRegOrLogin,
   onSubmit,
   handleRegisterModal,
@@ -31,7 +30,9 @@ const PopupWithForm = ({
 
         <form className="popupwithform__form" onSubmit={onSubmit}>
           {children}
-
+          <span className="popupwithform__form-error">
+            {/* MESSAGE OF SUBMIT ERROR */}
+          </span>
           <button className="popupwithform__submit">{buttonText}</button>
           <p className="popupwithform__subtext">
             or{" "}

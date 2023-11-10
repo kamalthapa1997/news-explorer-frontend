@@ -5,9 +5,8 @@ const Header = ({
   handleLoginModal,
   handleMenuBar,
   menuBarOpen,
-  loggedIn = { loggedIn },
-  handleIsSaved,
-  isSaved,
+  loggedIn,
+  handleSignOut,
 }) => {
   return (
     <>
@@ -15,13 +14,9 @@ const Header = ({
         menuBarOpen={menuBarOpen}
         handleLoginModal={handleLoginModal}
         loggedIn={loggedIn}
+        handlelogOut={handleSignOut}
       />
-      <MobileMenuBar
-        handleIsSaved={handleIsSaved}
-        isSaved={isSaved}
-        menuBarOpen={menuBarOpen}
-        handleMenuBar={handleMenuBar}
-      />
+      <MobileMenuBar menuBarOpen={menuBarOpen} handleMenuBar={handleMenuBar} />
     </>
   );
 };
