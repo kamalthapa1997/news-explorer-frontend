@@ -63,27 +63,31 @@ function App() {
   };
 
   const userSignInAccount = ({ email, password }) => {
-    try {
-      auth.userSignIn({ email, password }).then((data) => {
-        if (data.token) {
-          localStorage.setItem("jwt", data.token);
-          handleTokenCheck(data.token);
-          setToken(data.token);
-        }
-      });
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-    }
+    setLoggedIn(true);
+    handleModalClose();
+
+    // try {
+    //   auth.userSignIn({ email, password }).then((data) => {
+    //     if (data.token) {
+    //       localStorage.setItem("jwt", data.token);
+    //       handleTokenCheck(data.token);
+    //       setToken(data.token);
+    //     }
+    //   });
+    //   handleModalClose();
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const userSignUpAccount = ({ email, password, userName }) => {
-    try {
-      auth.registerNewUser({ email, password, userName });
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-    }
+    handleModalClose();
+    // try {
+    //   auth.registerNewUser({ email, password, userName });
+    //   handleModalClose();
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const handleDeleteSaved = (id) => {
@@ -146,34 +150,34 @@ function App() {
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
 
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem("jwt");
 
-    if (jwt) {
-      auth
-        .checkTokenValidity(jwt)
-        .then((data) => {
-          setCurrentUser(data.data);
-          setToken(jwt);
-          setLoggedIn(token !== "" ? true : false);
-        })
-        .then(() => {
-          getNewsItems(jwt).then((data) => {
-            settingSavedArticles(data);
-          });
-        })
+  //   if (jwt) {
+  //     auth
+  //       .checkTokenValidity(jwt)
+  //       .then((data) => {
+  //         setCurrentUser(data.data);
+  //         setToken(jwt);
+  //         setLoggedIn(token !== "" ? true : false);
+  //       })
+  //       .then(() => {
+  //         getNewsItems(jwt).then((data) => {
+  //           settingSavedArticles(data);
+  //         });
+  //       })
 
-        .catch((err) => {
-          console.error(`Token validation in useEffect has error: ${err}`);
-          setPreloader(false);
-        });
-    } else {
-      setLoggedIn(false);
-      setPreloader(false);
-      localStorage.removeItem("jwt");
-      setToken("");
-    }
-  }, [token]);
+  //       .catch((err) => {
+  //         console.error(`Token validation in useEffect has error: ${err}`);
+  //         setPreloader(false);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //     setPreloader(false);
+  //     localStorage.removeItem("jwt");
+  //     setToken("");
+  //   }
+  // }, [token]);
 
   useEffect(() => {
     if (!activeModal) return;
@@ -235,38 +239,59 @@ function App() {
   const handleSaveNews = (article) => {
     if (loggedIn) {
       const isArticleSaved = savedArticles.some(
-        (newsCard) => newsCard.link === article.url
+        (newsCard) => newsCard.url === article.url
       );
 
       if (isArticleSaved) {
-        const id = article._id;
-        deleteSaveCard(id).then(() => {
-          setSavedArticles((preItems) => {
-            return preItems.filter((items) => {
-              return items._id !== id;
-            });
-          });
-
-          const newItem = { ...article, _id: "" };
-          const unsaveSearchResults = articles.map((newsArticle) =>
-            newsArticle.url === article.url ? newItem : newsArticle
-          );
-          setArticles(unsaveSearchResults);
-        });
+        // const id = article._id;
+        const updatedSavedArticle = savedArticles.filter(
+          (newsCard) => newsCard.urlToImage !== article.urlToImage
+        );
+        setSavedArticles(updatedSavedArticle);
       } else {
-        postNewsItems(article).then((newsItems) => {
-          setSavedArticles([newsItems.data, ...savedArticles]);
-          const savedId = newsItems.data._id;
-
-          const newItem = { ...article, _id: savedId };
-
-          const newSearchResults = articles.map((newsItem) =>
-            newsItem.url === article.url ? newItem : newsItem
-          );
-          setArticles(newSearchResults);
-        });
+        const updatedSavedArticle = [...savedArticles, article];
+        setSavedArticles(updatedSavedArticle);
       }
+    } else {
+      setLoggedIn(false);
     }
+
+    /////////-- HERE --//////
+
+    // if (loggedIn) {
+    //   const isArticleSaved = savedArticles.some(
+    //     (newsCard) => newsCard.link === article.url
+    //   );
+
+    //   if (isArticleSaved) {
+    //     const id = article._id;
+    //     deleteSaveCard(id).then(() => {
+    //       setSavedArticles((preItems) => {
+    //         return preItems.filter((items) => {
+    //           return items._id !== id;
+    //         });
+    //       });
+
+    //       const newItem = { ...article, _id: "" };
+    //       const unsaveSearchResults = articles.map((newsArticle) =>
+    //         newsArticle.url === article.url ? newItem : newsArticle
+    //       );
+    //       setArticles(unsaveSearchResults);
+    //     });
+    //   } else {
+    //     postNewsItems(article).then((newsItems) => {
+    //       setSavedArticles([newsItems.data, ...savedArticles]);
+    //       const savedId = newsItems.data._id;
+
+    //       const newItem = { ...article, _id: savedId };
+
+    //       const newSearchResults = articles.map((newsItem) =>
+    //         newsItem.url === article.url ? newItem : newsItem
+    //       );
+    //       setArticles(newSearchResults);
+    //     });
+    //   }
+    // }
   };
 
   const handleMobileIsSaved = () => {
