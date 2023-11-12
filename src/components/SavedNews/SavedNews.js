@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import SavedNewsList from "../SavedNewsList/SavedNewsList";
 import SavedNewsListContext from "../../contexts/SavedNewsListContext";
+import SavedKeywords from "../SavedKeywords/SavedKeywords";
 
 import "./SavedNews.css";
-const SavedNews = () => {
+
+const SavedNews = ({ handleDeleteSaved, savedKeywordsLists }) => {
   const { savedArticles } = useContext(SavedNewsListContext);
 
   return (
@@ -12,15 +14,9 @@ const SavedNews = () => {
       <div className="newscards__titles">
         <p className="newscards__text">Saved articles</p>
         <p className="newscards__subtext">{`Elise, you have ${savedArticles.length} saved articles`}</p>
-        <p className=" newscards__keywords">
-          By keywords:{" "}
-          <span className="newscards__keyword">
-            {" "}
-            Nature, Yellowstone, and 2 other
-          </span>
-        </p>
+        <SavedKeywords items={savedKeywordsLists} />
       </div>
-      <SavedNewsList />
+      <SavedNewsList handleDeleteSaved={handleDeleteSaved} />
     </div>
   );
 };

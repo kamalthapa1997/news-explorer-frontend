@@ -20,7 +20,6 @@
   padding: 34px 36px 28px;
   margin: auto;
   width: 430px;
-
   border-radius: 16px;
   background: #fff;
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
@@ -56,7 +55,16 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding-bottom: 31px;
+  /* padding-bottom: 31px; */
+}
+.popupwithform__error {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: #f00;
+  padding-bottom: 13px;
+  font-family: "Inter", sans-serif;
+  height: 14px;
 }
 .popupwithform__form {
   display: flex;
@@ -104,6 +112,7 @@
 }
 .popupwithform__registertext {
   color: #2f71e5;
+  cursor: pointer;
 }
 .popupwithform__checkbox-title {
   margin: 0;
@@ -152,6 +161,17 @@
 .popupwithform__submit:hover {
   background: #2f71e5;
   color: #fff;
+}
+.popupwithform__form-error {
+  height: 14px;
+  padding-top: 4px;
+  color: #f00;
+
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
 }
 .form__label {
   display: block;
@@ -205,4 +225,21 @@
   font-style: normal;
   font-weight: 700;
   line-height: 1.2;
+}
+
+@media (max-width: 767px) {
+  .popupwithform__container {
+    width: 328px;
+    padding: 16px;
+  }
+  .popupwithform__input {
+    width: 288px;
+  }
+
+  .popupwithform__submit {
+    width: 288px;
+  }
+  .popupwithform__close {
+    right: 9px;
+  }
 }

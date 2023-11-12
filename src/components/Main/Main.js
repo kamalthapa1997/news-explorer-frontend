@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Main.css";
 function Main({ handleSearchNews }) {

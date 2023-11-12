@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const KEY = "0028693c676a4e198749bf8d99088f91";
 const BASE_URL = `https://newsapi.org`;
 const toDate = new Date().toISOString().split("T")[0]; // Today's date

@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./MobileNavigationBar.css";
+
 const MobileNavigationBar = ({
+  handleSignOut,
   handleLoginModal,
   loggedIn,
   handleCloseMenuBar,
-  handleIsSaved,
+  handleMobileIsSaved,
 }) => {
   return (
     <div className="mobilenavigationbar">
@@ -18,7 +20,6 @@ const MobileNavigationBar = ({
             <Link className="navigation__home-link" to="/">
               <p
                 onClick={() => {
-                  // handleIsSaved();
                   handleCloseMenuBar();
                 }}
                 className="mobilenavigationbar__home"
@@ -28,11 +29,11 @@ const MobileNavigationBar = ({
             </Link>
             <Link
               onClick={() => {
-                handleIsSaved();
+                handleMobileIsSaved();
                 handleCloseMenuBar();
               }}
               className="mobilenavigationbar__savednews-link"
-              to="/saved-news"
+              to="/articles"
             >
               <p className="mobilenavigationbar__saved-article ">
                 {" "}
@@ -41,12 +42,16 @@ const MobileNavigationBar = ({
             </Link>
             <div className="mobilenavigationbar__profile">
               <p className="mobilenavigationbar__username">Elise</p>
-              <button className="mobilenavigationbar__logout-btn"></button>
+
+              <button
+                onClick={handleSignOut}
+                className="mobilenavigationbar__logout-btn"
+              ></button>
             </div>
           </div>
         ) : (
           <div className="mobilenavigationbar__infos">
-            <Link to="/">
+            <Link className="navigation__home-link" to="/">
               <p className="mobilenavigationbar__home"> Home</p>
             </Link>
             <button

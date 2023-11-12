@@ -75,7 +75,7 @@
   width: 288px;
   justify-content: center;
   margin: 0 auto;
-  align-items: end;
+  align-items: flex-end;
   gap: 16px;
 }
 .mobilenavigationbar__savednews-link {
@@ -85,7 +85,7 @@
   margin: 0;
   color: #fff;
   text-align: center;
-  font-family: Roboto;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
