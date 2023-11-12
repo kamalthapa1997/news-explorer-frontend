@@ -65,31 +65,27 @@ function App() {
   };
 
   const userSignInAccount = ({ email, password }) => {
-    setLoggedIn(true);
-    handleModalClose();
-
-    // try {
-    //   auth.userSignIn({ email, password }).then((data) => {
-    //     if (data.token) {
-    //       localStorage.setItem("jwt", data.token);
-    //       handleTokenCheck(data.token);
-    //       setToken(data.token);
-    //     }
-    //   });
-    //   handleModalClose();
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      auth.userSignIn({ email, password }).then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          handleTokenCheck(data.token);
+          setToken(data.token);
+        }
+      });
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const userSignUpAccount = ({ email, password, userName }) => {
-    handleModalClose();
-    // try {
-    //   auth.registerNewUser({ email, password, userName });
-    //   handleModalClose();
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      auth.registerNewUser({ email, password, userName });
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDeleteSaved = (id) => {
@@ -152,34 +148,34 @@ function App() {
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
 
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem("jwt");
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
 
-  //   if (jwt) {
-  //     auth
-  //       .checkTokenValidity(jwt)
-  //       .then((data) => {
-  //         setCurrentUser(data.data);
-  //         setToken(jwt);
-  //         setLoggedIn(token !== "" ? true : false);
-  //       })
-  //       .then(() => {
-  //         getNewsItems(jwt).then((data) => {
-  //           settingSavedArticles(data);
-  //         });
-  //       })
+    if (jwt) {
+      auth
+        .checkTokenValidity(jwt)
+        .then((data) => {
+          setCurrentUser(data.data);
+          setToken(jwt);
+          setLoggedIn(token !== "" ? true : false);
+        })
+        .then(() => {
+          getNewsItems(jwt).then((data) => {
+            settingSavedArticles(data);
+          });
+        })
 
-  //       .catch((err) => {
-  //         console.error(`Token validation in useEffect has error: ${err}`);
-  //         setPreloader(false);
-  //       });
-  //   } else {
-  //     setLoggedIn(false);
-  //     setPreloader(false);
-  //     localStorage.removeItem("jwt");
-  //     setToken("");
-  //   }
-  // }, [token]);
+        .catch((err) => {
+          console.error(`Token validation in useEffect has error: ${err}`);
+          setPreloader(false);
+        });
+    } else {
+      setLoggedIn(false);
+      setPreloader(false);
+      localStorage.removeItem("jwt");
+      setToken("");
+    }
+  }, [token]);
 
   useEffect(() => {
     if (!activeModal) return;
