@@ -18,8 +18,6 @@ import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar";
 import { getArticles } from "../../utils/ThirdPartyApi";
 // API
-import * as auth from "../../utils/auth";
-import { getNewsItems, postNewsItems, deleteSaveCard } from "../../utils/Api";
 
 // CONTEXTS
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
@@ -32,7 +30,9 @@ import CurrentLocationContext from "../../contexts/CurrentLocationContext";
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [preloader, setPreloader] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem("loggedIn") === "true"
+  );
   const [articles, setArticles] = useState([]);
   const [menuBarOpen, setMenuBarOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -43,10 +43,9 @@ function App() {
   const [mobileIsSaved, setMobileIsSaved] = useState(false);
 
   const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
+  const [emailNotFoundError] = useState("");
 
   // Get Token
-
-  const [token, setToken] = useState("");
 
   const location = useLocation();
   // const currentLocation = location.pathname;
@@ -65,78 +64,53 @@ function App() {
   const userSignInAccount = ({ email, password }) => {
     setLoggedIn(true);
     handleModalClose();
-
-    // try {
-    //   auth.userSignIn({ email, password }).then((data) => {
-    //     if (data.token) {
-    //       localStorage.setItem("jwt", data.token);
-    //       handleTokenCheck(data.token);
-    //       setToken(data.token);
-    //     }
-    //   });
-    //   handleModalClose();
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
+  useEffect(() => {
+    localStorage.setItem("loggedIn", loggedIn);
+  }, [loggedIn]);
+  console.log("LOGGED IN", loggedIn);
 
   const userSignUpAccount = ({ email, password, userName }) => {
     handleModalClose();
-    // try {
-    //   auth.registerNewUser({ email, password, userName });
-    //   handleModalClose();
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
 
-  const handleDeleteSaved = (id) => {
-    deleteSaveCard(id).then(() => {
-      setSavedArticles((preItems) => {
-        return preItems.filter((items) => {
-          return items._id !== id;
-        });
+  const handleDeleteSaved = (url) => {
+    setSavedArticles((preItems) => {
+      return preItems.filter((items) => {
+        return items.url !== url;
       });
     });
   };
 
   const handleSignOut = () => {
     setLoggedIn(false);
-    localStorage.removeItem("jwt");
-    setCurrentUser("");
-    setToken("");
+    localStorage.removeItem("savedArticles");
+
     if (menuBarOpen) {
       setMenuBarOpen(false);
     }
   };
 
-  const handleTokenCheck = (token) => {
-    if (token) {
-      return auth
-        .checkTokenValidity(token)
-        .then((res) => {
-          setLoggedIn(true);
+  // const handleTokenCheck = (token) => {
+  //   if (token) {
+  //     return auth
+  //       .checkTokenValidity(token)
+  //       .then((res) => {
+  //         setLoggedIn(true);
 
-          setCurrentUser(res.data);
-        })
-        .catch((err) => {
-          setLoggedIn(false);
-          console.error(err);
-        });
-    } else {
-      setLoggedIn(false);
-      localStorage.removeItem("jwt");
-      setCurrentUser("");
-      setToken("");
-    }
-  };
-
-  // ---SET SAVED ARTICLES---//
-  const settingSavedArticles = (newsArticles) => {
-    const reverseArticles = newsArticles.data.reverse();
-
-    setSavedArticles(reverseArticles);
-  };
+  //         setCurrentUser(res.data);
+  //       })
+  //       .catch((err) => {
+  //         setLoggedIn(false);
+  //         console.error(err);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //     localStorage.removeItem("jwt");
+  //     setCurrentUser("");
+  //     setToken("");
+  //   }
+  // };
 
   // ---USE EFFECTS---//
   useEffect(() => {
@@ -145,7 +119,7 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const extractedKeywords = savedArticles.map((item) => item.keyword).flat();
+    const extractedKeywords = savedArticles.map((item) => item.tag).flat();
     const uniqueKeywords = Array.from(new Set(extractedKeywords));
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
@@ -195,37 +169,6 @@ function App() {
     };
   }, [activeModal]);
 
-  // useEffect(() => {
-  //   setPreloader(true);
-
-  //   try {
-  //     getArticles()
-  //       .then((data) => {
-  //         const newsArticle = data.articles;
-  //         console.log(articles);
-
-  //         const updatedArticles = newsArticle.map((article) => ({
-  //           ...article,
-  //           tag: searchInput,
-  //         }));
-
-  //         // localStorage.setItem("articles", JSON.stringify(updatedArticles));
-  //         setArticles(data.articles);
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       })
-  //       .finally(() => {
-  //         setPreloader(false);
-  //       });
-  //   } catch (error) {
-  //     setPreloader(false);
-
-  //     console.error("Nothing Found");
-  //   }
-  //   setPreloader(false);
-  // }, [searchInput]);
-
   useEffect(() => {
     const storedArticles = localStorage.getItem("articles");
 
@@ -235,7 +178,27 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      const savedArt = localStorage.getItem("savedArticles");
+      if (savedArt) {
+        const parsedArticles = JSON.parse(savedArt);
+        console.log("parsedArticles", parsedArticles);
+        setSavedArticles(parsedArticles);
+      }
+    } else {
+      setLoggedIn(false);
+      localStorage.removeItem("savedArticles");
+    }
+  }, [loggedIn]);
+
   //-- HANDLE SAVE NEWS --//
+  const settingSavedArticles = (newsArticles) => {
+    const reversedArticles = newsArticles.reverse();
+    setSavedArticles(reversedArticles);
+    localStorage.setItem("savedArticles", JSON.stringify(reversedArticles));
+  };
+
   const handleSaveNews = (article) => {
     if (loggedIn) {
       const isArticleSaved = savedArticles.some(
@@ -247,51 +210,21 @@ function App() {
         const updatedSavedArticle = savedArticles.filter(
           (newsCard) => newsCard.urlToImage !== article.urlToImage
         );
-        setSavedArticles(updatedSavedArticle);
+        settingSavedArticles(updatedSavedArticle);
       } else {
-        const updatedSavedArticle = [...savedArticles, article];
-        setSavedArticles(updatedSavedArticle);
+        console.log(searchInput, "searchInput");
+        const updatedArt = {
+          ...article,
+          tag: searchInput || article.author,
+        };
+        const updatedSavedArticle = [...savedArticles, updatedArt];
+        console.log("======>>", updatedSavedArticle);
+
+        settingSavedArticles(updatedSavedArticle);
       }
     } else {
       setLoggedIn(false);
     }
-
-    /////////-- HERE --//////
-
-    // if (loggedIn) {
-    //   const isArticleSaved = savedArticles.some(
-    //     (newsCard) => newsCard.link === article.url
-    //   );
-
-    //   if (isArticleSaved) {
-    //     const id = article._id;
-    //     deleteSaveCard(id).then(() => {
-    //       setSavedArticles((preItems) => {
-    //         return preItems.filter((items) => {
-    //           return items._id !== id;
-    //         });
-    //       });
-
-    //       const newItem = { ...article, _id: "" };
-    //       const unsaveSearchResults = articles.map((newsArticle) =>
-    //         newsArticle.url === article.url ? newItem : newsArticle
-    //       );
-    //       setArticles(unsaveSearchResults);
-    //     });
-    //   } else {
-    //     postNewsItems(article).then((newsItems) => {
-    //       setSavedArticles([newsItems.data, ...savedArticles]);
-    //       const savedId = newsItems.data._id;
-
-    //       const newItem = { ...article, _id: savedId };
-
-    //       const newSearchResults = articles.map((newsItem) =>
-    //         newsItem.url === article.url ? newItem : newsItem
-    //       );
-    //       setArticles(newSearchResults);
-    //     });
-    //   }
-    // }
   };
 
   const handleMobileIsSaved = () => {
@@ -413,6 +346,7 @@ function App() {
                         handleModalClose={handleModalClose}
                         handleRegisterModal={handleRegisterModal}
                         userSignInAccount={userSignInAccount}
+                        emailNotFoundError={emailNotFoundError}
                       />
                     )}
                     {activeModal === "userRegister" && (

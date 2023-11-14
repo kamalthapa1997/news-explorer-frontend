@@ -24,7 +24,7 @@
 .mobilenavigationbar__title {
   margin: 0;
   color: var(--main-white, #fff);
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "Roboto Slab", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -44,7 +44,7 @@
 .mobilenavigationbar__home {
   margin: 0;
   color: var(--main-white, #fff);
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -55,7 +55,7 @@
   height: 56px;
   color: var(--main-white, #fff);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -85,7 +85,7 @@
   margin: 0;
   color: #fff;
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

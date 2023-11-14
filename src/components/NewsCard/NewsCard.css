@@ -9,7 +9,7 @@
 .newscards__titles {
   -webkit-font-smoothing: antialiased;
   color: var(--main-primary, #1a1b22);
-  font-family: " Roboto Slab", sans-serif;
+  font-family: " Roboto Slab", Arial;
   font-size: 26px;
   font-style: normal;
   font-weight: 400;
@@ -32,7 +32,7 @@
 .newscards__subtext {
   margin: 0;
   color: var(--main-primary, #1a1b22);
-  font-family: " Roboto Slab", sans-serif;
+  font-family: " Roboto Slab", Arial;
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -49,7 +49,7 @@
 }
 .newscards__keyword {
   color: #1a1b22;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -106,7 +106,7 @@
   border-radius: 100px;
   color: #000;
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -125,7 +125,7 @@
   padding-top: 80px;
   padding-left: 104px;
   color: var(--main-primary, #1a1b22);
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "Roboto Slab", Arial;
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -143,7 +143,7 @@
   margin: 0;
   color: var(--main-primary, #1a1b22);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -177,7 +177,7 @@
 .newscards__dates {
   margin: 0;
   color: var(--simulator-gray-text, #b6bcbf);
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Source Sans Pro", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -185,7 +185,7 @@
 }
 .newscards__titles {
   color: var(--main-primary, #1a1b22);
-  font-family: " Roboto Slab", sans-serif;
+  font-family: " Roboto Slab", Arial;
   font-size: 26px;
   font-style: normal;
   font-weight: 400;
@@ -196,7 +196,7 @@
 .newscards__subheading {
   margin: 0;
   color: var(--main-primary, #1a1b22);
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "Roboto Slab", Arial;
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
@@ -208,7 +208,7 @@
 }
 .newscards__footer {
   color: var(--simulator-gray-text, #b6bcbf);
-  font-family: " Roboto Slab", sans-serif;
+  font-family: " Roboto Slab", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -221,7 +221,7 @@
   max-height: 110px;
   margin: 0;
   color: var(--main-primary, #1a1b22);
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -231,7 +231,7 @@
 }
 .newscards__details {
   display: flex;
-  padding: 17px 24px 24px 24px;
+  /* padding: 17px 24px 24px 24px; */
   box-sizing: border-box;
   flex-direction: column;
   gap: 16px;
@@ -292,12 +292,19 @@
 }
 .newscards__notfound-text {
   color: var(--main-primary, #1a1b22);
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "Roboto Slab", Arial;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
   margin: 0;
+}
+.newscards__infos {
+  display: flex;
+  flex-direction: column;
+  padding: 17px 24px 24px 24px;
+  height: 100%;
+  justify-content: space-between;
 }
 @media (max-width: 767px) {
   .newscards__article {
@@ -333,8 +340,12 @@
   }
   .newscards__details {
     gap: 10px;
-    padding: 16px;
+    /* padding: 16px; */
     max-width: 288px;
+  }
+  .newscards__infos {
+    padding: 16px;
+    gap: 8px;
   }
   .newscards__articles {
     gap: 10px;
@@ -388,6 +399,9 @@
   .newscards__details {
     gap: 0;
 
+    /* padding: 16px 15px; */
+  }
+  .newscards__infos {
     padding: 16px 15px;
   }
   .newscards__subheading {

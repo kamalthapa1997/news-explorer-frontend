@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./NavigationBar.css";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import currentPageContext from "../../contexts/CurrentLocationContext";
 import { useContext } from "react";
 
@@ -11,10 +10,7 @@ const NavigationBar = ({
   menuBarOpen,
   handlelogOut,
 }) => {
-  const { currentUserContextValue } = useContext(CurrentUserContext);
   const currentPage = useContext(currentPageContext);
-
-  const currentUser = currentUserContextValue.currentUser;
 
   const setTextColor = isSaved
     ? "navigationbar__text-black"
@@ -67,9 +63,7 @@ const NavigationBar = ({
           </Link>
 
           <div className={`navigationbar__profile  ${setBorderRadius}`}>
-            <p className={`navigationbar__username ${setTextColor}`}>
-              {currentUser.name}
-            </p>
+            <p className={`navigationbar__username ${setTextColor}`}>Lotus</p>
             <button
               onClick={handlelogOut}
               className={`navigationbar__logout-btn ${setLogoutBtn}`}

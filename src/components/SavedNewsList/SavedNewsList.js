@@ -9,16 +9,18 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
   const { currentUserContextValue } = useContext(CurrentUserContext);
 
   const loggedIn = currentUserContextValue.loggedIn;
+  const reversedSavedArticles = savedArticles.reverse();
+  console.log(reversedSavedArticles);
 
   return (
     <div className="newscards__articles">
       {loggedIn &&
-        savedArticles.map((article, index) => (
+        reversedSavedArticles.map((article, index) => (
           <NewsCardList
             handleDeleteSaved={handleDeleteSaved}
             article={article}
-            index={index}
-            key={article._id}
+            // index={index}
+            key={index}
           />
         ))}
     </div>

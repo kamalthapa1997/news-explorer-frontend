@@ -5,6 +5,7 @@ const LoginModal = ({
   handleModalClose,
   handleRegisterModal,
   userSignInAccount,
+  emailNotFoundError,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,6 +59,7 @@ const LoginModal = ({
       linkToRegOrLogin="Sign up"
       handleRegisterModal={handleRegisterModal}
       onSubmit={loginSubmit}
+      emailNotFoundError={emailNotFoundError}
     >
       <label className="popupwithform__label">
         Email

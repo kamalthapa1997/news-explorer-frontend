@@ -34,7 +34,7 @@
 }
 .navigationbar__title {
   color: var(--main-white, #fff);
-  font-family: "Roboto", sans-serif Slab;
+  font-family: "Roboto", Arial Slab;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -75,7 +75,7 @@
   justify-content: center;
   color: var(--main-white, #fff);
 
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -86,7 +86,7 @@
 .navigationbar__saved-article {
   color: var(--simulator-gray-text, #b6bcbf);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;

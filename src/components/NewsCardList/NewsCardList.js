@@ -20,10 +20,10 @@ const NewsCardList = ({ article, handleDeleteSaved, handleSaveNews }) => {
   const handleShowIcon = () => setShowIcon(true);
 
   const isArticleSaved =
-    loggedIn && savedArticles.some((newsCard) => newsCard.link === article.url);
+    loggedIn && savedArticles.some((newsCard) => newsCard.url === article.url);
 
   return (
-    <div key={article._id} className="newscards__article">
+    <div key={article.url} className="newscards__article">
       {currentLocation === "/" ? (
         <div className="newscards__bookmarks">
           {showIcon && !loggedIn && (
@@ -47,11 +47,12 @@ const NewsCardList = ({ article, handleDeleteSaved, handleSaveNews }) => {
         </div>
       ) : (
         <div className=" newscards__type-and-delete">
-          <p className="newscards__typeof">{article.keyword}</p>
+          <p className="newscards__typeof">{article.tag}</p>
           <div className="newscards__delete">
             <button
               onClick={() => {
-                handleDeleteSaved(article._id);
+                // DELETE SAVED
+                handleDeleteSaved(article.url);
               }}
               className="newscards__delete-btn"
             ></button>
@@ -61,22 +62,16 @@ const NewsCardList = ({ article, handleDeleteSaved, handleSaveNews }) => {
 
       <img
         className="newscards__img"
-        src={article.urlToImage || article.image}
-        alt={article.source.name || article.source}
+        src={article.urlToImage}
+        alt={article.source.name}
       />
-      <div className="newscards__details">
-        <p className="newscards__dates">
-          {article.publishedAt || article.date}
-        </p>
-        <p className="newscards__subheading"> {article.title}</p>
-        <p className="newscards__paragraph">
-          {article.description || article.text}
-        </p>
-        {currentLocation === "/" ? (
-          <p className="newscards__footer">{article.source.name}</p>
-        ) : (
-          <p className="newscards__footer">{article.source}</p>
-        )}
+      <div className="newscards__infos">
+        <div className="newscards__details">
+          <p className="newscards__dates">{article.publishedAt}</p>
+          <p className="newscards__subheading"> {article.title}</p>
+          <p className="newscards__paragraph">{article.description}</p>
+        </div>
+        <p className="newscards__footer">{article.source.name}</p>
       </div>
     </div>
   );

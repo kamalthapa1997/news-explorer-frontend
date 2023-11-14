@@ -50,7 +50,7 @@
 }
 .popupwithform__label {
   color: #2f71e5;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Arial;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -63,7 +63,7 @@
   font-weight: 400;
   color: #f00;
   padding-bottom: 13px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Arial;
   height: 14px;
 }
 .popupwithform__form {
@@ -87,13 +87,13 @@
 }
 .popupwithform__input::placeholder {
   font-size: 16px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-weight: 700;
   line-height: 20px;
 }
 .popupwithform__title {
   color: var(--main-primary, #1a1b22);
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 24px;
   font-style: normal;
   font-weight: 900;
@@ -119,7 +119,7 @@
   padding-top: 28px;
   color: #000;
   font-size: 16px;
-  font-family: "Cabinet Grotesk", sans-serif;
+  font-family: "Cabinet Grotesk", Arial;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -134,7 +134,7 @@
 .popupwithform__image-caption {
   padding-left: 32px;
   font-size: 20px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-weight: 700;
   line-height: 24px;
 }
@@ -147,7 +147,7 @@
   padding: 0;
   color: var(--simulator-gray-text, #b6bcbf);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -166,9 +166,9 @@
   height: 14px;
   padding-top: 4px;
   color: #f00;
-
+  padding-bottom: 8px;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Arial;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
