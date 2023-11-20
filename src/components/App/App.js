@@ -7,7 +7,6 @@ import Main from "../Main/Main";
 import Section from "../Section/Section";
 
 import LoginModal from "../LoginModal/LoginModal";
-import Preloader from "../Preloader/Preloader";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import Footer from "../Footer/Footer";
 
@@ -41,9 +40,12 @@ function App() {
   const [savedKeyword, setSavedKeyword] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const [mobileIsSaved, setMobileIsSaved] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
 
   const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
   const [emailNotFoundError] = useState("");
+  // ------> VIEW PORT
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   // Get Token
 
@@ -53,6 +55,22 @@ function App() {
   const [currentPage, setCurrentPage] = useState(
     localStorage.getItem("currentPage") || location.pathname
   );
+
+  // ----->> USE EFFECT FOR VIEWPORT
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  console.log("viewport", viewportWidth);
+  console.log("is modal on??", !!activeModal);
   console.log("current page", currentPage);
   const currentUserContextValue = {
     currentUser,
@@ -68,7 +86,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("loggedIn", loggedIn);
   }, [loggedIn]);
-  console.log("LOGGED IN", loggedIn);
+  // console.log("LOGGED IN", loggedIn);
 
   const userSignUpAccount = ({ email, password, userName }) => {
     handleModalClose();
@@ -237,8 +255,13 @@ function App() {
 
   const handleLoginModal = (e) => {
     setActiveModal("userLogin");
+
+    setHideHeader(!hideHeader);
     setMenuBarOpen(false);
+
+    // hide the header
   };
+  console.log("HIDE HEADER??", hideHeader);
   const handleRegisterModal = () => {
     setActiveModal("userRegister");
   };
@@ -295,16 +318,19 @@ function App() {
                   value={{ currentPage, setCurrentPage }}
                 >
                   <div className="appBody">
-                    <Header
-                      loggedIn={loggedIn}
-                      handleMenuBar={handleMenuBar}
-                      handleLoginModal={handleLoginModal}
-                      menuBarOpen={menuBarOpen}
-                      handleIsSaved={handleIsSaved}
-                      isSaved={isSaved}
-                      handleSignOut={handleSignOut}
-                      mobileIsSaved={mobileIsSaved}
-                    />
+                    {!(activeModal && viewportWidth < 767) && (
+                      <Header
+                        loggedIn={loggedIn}
+                        handleMenuBar={handleMenuBar}
+                        handleLoginModal={handleLoginModal}
+                        menuBarOpen={menuBarOpen}
+                        handleIsSaved={handleIsSaved}
+                        isSaved={isSaved}
+                        handleSignOut={handleSignOut}
+                        mobileIsSaved={mobileIsSaved}
+                      />
+                    )}
+
                     <Switch>
                       <Route exact path="/">
                         <Main handleSearchNews={handleSearchNews} />
@@ -330,7 +356,6 @@ function App() {
 
                     <Footer />
 
-                    {preloader && <Preloader />}
                     {menuBarOpen && (
                       <MobileNavigationBar
                         MobileNavigationBar={MobileNavigationBar}

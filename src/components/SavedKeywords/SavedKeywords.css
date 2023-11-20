@@ -1,0 +1,18 @@
+.savedkeywords__keywords {
+  margin: 0;
+  color: #1a1b22;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.savedkeywords__keyword {
+  color: #1a1b22;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+}

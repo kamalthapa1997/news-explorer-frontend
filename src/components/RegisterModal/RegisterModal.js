@@ -68,6 +68,7 @@ const RegisterModal = ({
       buttonText="Sign up"
       linkToRegOrLogin="Sign in"
       onSubmit={onSubmit}
+      name="register"
     >
       <label className="popupwithform__label">
         Email

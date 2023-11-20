@@ -43,6 +43,10 @@
   gap: 40px;
 }
 
+.footer__links {
+  text-decoration: none;
+}
+
 @media (max-width: 767px) {
   .footer__infos {
     flex-direction: column-reverse;
@@ -55,12 +59,11 @@
   .footer__subtexts {
     width: 200px;
     height: 74px;
-    /* display: flex; */
+
     flex-direction: column;
     place-items: flex-start;
     justify-content: space-between;
     gap: unset;
-    /* padding: 20px 0 38px 16px; */
   }
   .footer__sublinks {
     gap: 16px;

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./NavigationBar.css";
 import currentPageContext from "../../contexts/CurrentLocationContext";
 import { useContext } from "react";
+import logoutBtnWhite from "../../images/logout.svg";
+import logoutBtnDark from "../../images/logout-datk.svg";
 
 const NavigationBar = ({
   handleLoginModal,
@@ -14,7 +16,7 @@ const NavigationBar = ({
 
   const setTextColor = isSaved
     ? "navigationbar__text-black"
-    : ".navigationbar__text-white";
+    : "navigationbar__text-white";
 
   const setBorderButtom = isSaved
     ? "navigationbar-border-black"
@@ -38,7 +40,7 @@ const NavigationBar = ({
       : "";
 
   return (
-    <div className={`navigationbar  ${setBorderButtom}`}>
+    <nav className={`navigationbar  ${setBorderButtom}`}>
       <Link className="navigationbar__title-link" to="/">
         <h1 className={`navigationbar__title ${setTextColor}  `}>
           NewsExplorer
@@ -62,13 +64,20 @@ const NavigationBar = ({
             </p>
           </Link>
 
-          <div className={`navigationbar__profile  ${setBorderRadius}`}>
-            <p className={`navigationbar__username ${setTextColor}`}>Lotus</p>
-            <button
-              onClick={handlelogOut}
-              className={`navigationbar__logout-btn ${setLogoutBtn}`}
-            ></button>
-          </div>
+          {/* <div className={`navigationbar__profile  ${setBorderRadius}`}> */}
+          {/* <p className={`navigationbar__username ${setTextColor}`}>Lotus</p> */}
+          <button
+            onClick={handlelogOut}
+            className={`navigationbar__logout ${setTextColor}  `}
+          >
+            Lotus
+            <img
+              src={isSaved ? logoutBtnDark : logoutBtnWhite}
+              alt="Logout Icon"
+              className="navigationbar__logout-logo"
+            />
+          </button>
+          {/* </div> */}
         </div>
       ) : (
         <div className={`navigationbar__infos `}>
@@ -79,7 +88,7 @@ const NavigationBar = ({
           </p>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 

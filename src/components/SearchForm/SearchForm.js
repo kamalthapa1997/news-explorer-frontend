@@ -1,10 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchNewsContext from "../../contexts/SearchNewsContext";
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
+import "./SearchForm.css";
 
 const SearchForm = ({ handleSearchNews }) => {
   const { searchInput, setSearchInput } = useContext(SearchNewsContext);
   const { setSavedKeyword } = useContext(SavedNewsKeywordContext);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+
+    setTimeout(() => {
+      setIsClicked(false);
+    }, 1000);
+  };
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
@@ -24,14 +34,20 @@ const SearchForm = ({ handleSearchNews }) => {
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit} className="main__search-form">
+      <form onSubmit={handleSearchSubmit} className="searchform">
         <input
           type="text"
-          className="main__search-input"
+          className="searchform__input"
           placeholder="Nature"
           onChange={handleSearchInput}
         />
-        <button className="main__search-button" placeholder="Enter topic">
+        <button
+          onClick={handleClick}
+          className={`searchform__button  ${
+            isClicked ? "searchform__button-clicked" : ""
+          }`}
+          placeholder="Enter topic"
+        >
           Search
         </button>
       </form>

@@ -19,7 +19,7 @@ const PopupWithForm = ({
   emailNotFoundError,
 }) => {
   return (
-    <div className={`popupwithform popupwithform__type_${name}`}>
+    <div className={`popupwithform  popupwithform-${name}`}>
       <div className="popupwithform__container">
         <button
           type="button"
@@ -37,7 +37,7 @@ const PopupWithForm = ({
           <button className="popupwithform__submit">{buttonText}</button>
           <p className="popupwithform__subtext">
             or{" "}
-            <span
+            <button
               className="popupwithform__registertext"
               onClick={
                 linkToRegOrLogin === "Sign in"
@@ -46,7 +46,7 @@ const PopupWithForm = ({
               }
             >
               {linkToRegOrLogin}
-            </span>
+            </button>
           </p>
         </form>
       </div>

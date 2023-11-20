@@ -3,32 +3,33 @@ import NewsCardList from "../NewsCardList/NewsCardList";
 import IsLoadingContext from "../../contexts/IsLoadingContext";
 import { useContext, useState } from "react";
 import articleNotFound from "../../images/no-results.svg";
+import Preloader from "../Preloader/Preloader";
 
 const NewsCards = ({ articles, handleSaveNews }) => {
   const [visibleCount, setVisibleCount] = useState(3);
-  const { setPreloader } = useContext(IsLoadingContext);
+  const { preloader } = useContext(IsLoadingContext);
 
   const showMore = () => {
-    setPreloader(true);
-
     setTimeout(() => {
       setVisibleCount((preCount) => preCount + 3);
-
-      setPreloader(false);
     }, 1000);
   };
 
   return (
-    <div className="newscards">
-      {articles.length === 0 ? (
+    <section className="newscards">
+      {preloader ? (
+        <Preloader />
+      ) : articles.length === 0 ? (
         <div className="newscards__notfound">
           <img
             className="newscards__notfound-logo"
             src={articleNotFound}
             alt="not found"
           />
-
-          <p className="newscards__notfound-text">Articles not found.</p>
+          <p className="newscards__nothing-found">Nothing found</p>
+          <p className="newscards__notfound-text">
+            Sorry, but nothing matched your search terms.
+          </p>
         </div>
       ) : (
         <div
@@ -36,7 +37,7 @@ const NewsCards = ({ articles, handleSaveNews }) => {
             articles.length ? " newscards__searchlist" : "newscards__hidden"
           }`}
         >
-          <p className="newscards__searchtexts"> Search results</p>
+          <h2 className="newscards__searchtexts"> Search results</h2>
           <div className="newscards__newslists">
             <div className="newscards__articles">
               {articles.slice(0, visibleCount).map((article) => (
@@ -47,6 +48,7 @@ const NewsCards = ({ articles, handleSaveNews }) => {
                 />
               ))}
             </div>
+
             <button
               onClick={showMore}
               className={` ${
@@ -62,7 +64,7 @@ const NewsCards = ({ articles, handleSaveNews }) => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

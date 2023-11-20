@@ -1,6 +1,6 @@
 .appBody {
   max-width: 1440px;
-  margin: auto;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 @media (min-width: 1024px) {

@@ -9,11 +9,11 @@ const SavedNews = ({ handleDeleteSaved, savedKeywordsLists }) => {
   const { savedArticles } = useContext(SavedNewsListContext);
 
   return (
-    <div className="newscards newscards-saved">
+    <div className="savednews savednews-saved">
       {/* savednewsheader */}
-      <div className="newscards__titles">
-        <p className="newscards__text">Saved articles</p>
-        <p className="newscards__subtext">{`Elise, you have ${savedArticles.length} saved articles`}</p>
+      <div className="savednews__titles">
+        <p className="savednews__text">Saved articles</p>
+        <h2 className="savednews__subtext">{`Elise, you have ${savedArticles.length} saved articles`}</h2>
         <SavedKeywords items={savedKeywordsLists} />
       </div>
       <SavedNewsList handleDeleteSaved={handleDeleteSaved} />

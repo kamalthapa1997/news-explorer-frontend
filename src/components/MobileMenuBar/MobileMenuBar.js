@@ -7,7 +7,7 @@ const MobileMenuBar = ({ handleMenuBar, menuBarOpen }) => {
   const currentPage = useContext(currentPageContext);
 
   return (
-    <>
+    <div className="mobilemenubar">
       <button
         className={`mobilemenubar__icon   ${
           currentPage.currentPage === "/articles"
@@ -18,7 +18,7 @@ const MobileMenuBar = ({ handleMenuBar, menuBarOpen }) => {
       >
         {" "}
       </button>
-    </>
+    </div>
   );
 };
 

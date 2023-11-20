@@ -1,6 +1,7 @@
 import SavedNewsListContext from "../../contexts/SavedNewsListContext";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import "./SavedNewsList.css";
 
 import NewsCardList from "../NewsCardList/NewsCardList";
 
@@ -13,6 +14,7 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
   console.log(reversedSavedArticles);
 
   return (
+    // <div className="savednewslist">
     <div className="newscards__articles">
       {loggedIn &&
         reversedSavedArticles.map((article, index) => (
@@ -24,6 +26,7 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
           />
         ))}
     </div>
+    // </div>
   );
 };
 
