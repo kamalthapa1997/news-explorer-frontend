@@ -33,7 +33,7 @@
 .searchform__button:hover {
   background: #347eff;
 }
-.searchform__button-clicked {
+.searchform__button:active {
   background: #2a65cc;
 }
 

@@ -21,9 +21,9 @@ const NavigationBar = ({
   const setBorderButtom = isSaved
     ? "navigationbar-border-black"
     : "navigationbar-border-white";
-  const setBorderRadius = isSaved ? "navigationbar__profile-dark" : "";
+  // const setBorderRadius = isSaved ? "navigationbar__profile-dark" : "";
 
-  const setLogoutBtn = isSaved ? "navigationbar__logout-btn-dark" : "";
+  // const setLogoutBtn = isSaved ? "navigationbar__logout-btn-dark" : "";
 
   const setBorderColor =
     currentPage.currentPage === "/articles"

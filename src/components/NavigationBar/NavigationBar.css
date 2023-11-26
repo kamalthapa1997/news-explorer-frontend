@@ -2,10 +2,6 @@
   text-decoration: none;
 }
 
-.navigation__home-link {
-  text-decoration: none;
-}
-
 .navigationbar {
   height: 80px;
   display: flex;
@@ -21,6 +17,7 @@
 }
 .navigationbar-border-black {
   border-bottom: 1px solid #000000;
+  position: relative;
 }
 .navigationbar__text-border-black {
   border-bottom: 3px solid #000000;
@@ -32,6 +29,10 @@
 .navigationbar__title-link {
   text-decoration: none;
 }
+.navigation__home-link {
+  text-decoration: none;
+}
+
 .navigationbar__title {
   color: var(--main-white, #fff);
   font-family: "Roboto Slab", Arial;
@@ -47,6 +48,7 @@
   gap: 42px;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 .navigationbar__homepage {
   height: 80px;
@@ -181,6 +183,16 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .navigationbar {
     padding: 0 40px 0;
+    height: 66px;
+  }
+  .navigationbar__homepage {
+    height: 66px;
+  }
+  .navigationbar__infos {
+    height: 66px;
+  }
+  .navigationbar__saved-article {
+    height: 66px;
   }
 }
 @media (min-width: 1024px) {

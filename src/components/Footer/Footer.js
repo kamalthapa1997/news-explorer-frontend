@@ -14,7 +14,9 @@ const Footer = () => {
         <div className="footer__sublinks">
           <div className="footer__subtexts">
             <Link className="footer__links" to="/">
+              {/* <a className="footer__links" href="#main"> */}
               <p className="footer__subtext">Home</p>
+              {/* </a> */}
             </Link>
             <a
               className="footer__links"
@@ -26,9 +28,22 @@ const Footer = () => {
             </a>
           </div>
           <div className="footer__icons">
-            <img className="footer__icon" src={github} alt="github"></img>
-
-            <img className="footer__icon" src={facebook} alt="facebook"></img>
+            <a
+              className="footer__links"
+              href="https://github.com/kamalthapa1997"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img className="footer__icon" src={github} alt="github"></img>
+            </a>
+            <a
+              className="footer__links"
+              href="https://www.facebook.com/kamal.thapamagar.1806253?mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img className="footer__icon" src={facebook} alt="facebook"></img>
+            </a>
           </div>
         </div>
       </div>

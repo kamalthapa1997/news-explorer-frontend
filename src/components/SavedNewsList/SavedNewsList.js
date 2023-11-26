@@ -15,7 +15,7 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
 
   return (
     // <div className="savednewslist">
-    <div className="newscards__articles">
+    <section className="newscards__articles">
       {loggedIn &&
         reversedSavedArticles.map((article, index) => (
           <NewsCardList
@@ -25,7 +25,7 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
             key={index}
           />
         ))}
-    </div>
+    </section>
     // </div>
   );
 };

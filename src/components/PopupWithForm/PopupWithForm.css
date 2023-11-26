@@ -38,7 +38,7 @@
   position: absolute;
   top: -35px;
   right: -20px;
-  background: url(../../images/closeButton.png) no-repeat center;
+  background: url(../../images/closeButton.svg) no-repeat center transparent;
 
   border: none;
   padding: 0;
@@ -82,7 +82,8 @@
   border-top: 0;
   border-left: 0;
   padding: 0;
-  border-bottom: 1px rgba(0, 0, 0, 1) solid;
+
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
 }
 .popupwithform__input::placeholder {
   color: #000;

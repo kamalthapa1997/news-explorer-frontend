@@ -49,31 +49,36 @@ const NewsCardList = ({ article, handleDeleteSaved, handleSaveNews }) => {
       ) : (
         <div className=" newscardlist__type-and-delete">
           <p className="newscardlist__typeof">{article.tag}</p>
-          {/* <div className="newscardlist__delete"> */}
+
           <button
             onClick={() => {
-              // DELETE SAVED
               handleDeleteSaved(article.url);
             }}
             className="newscardlist__delete-btn"
           ></button>
-          {/* </div> */}
         </div>
       )}
+      <a
+        href={article.url}
+        className="newscardlist__links"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="newscardlist__img"
+          src={article.urlToImage}
+          alt={article.source.name}
+        />
 
-      <img
-        className="newscardlist__img"
-        src={article.urlToImage}
-        alt={article.source.name}
-      />
-      <div className="newscardlist__infos">
-        <div className="newscardlist__details">
-          <p className="newscardlist__dates">{article.publishedAt}</p>
-          <h2 className="newscardlist__subheading"> {article.title}</h2>
-          <p className="newscardlist__paragraph">{article.description}</p>
+        <div className="newscardlist__infos">
+          <div className="newscardlist__details">
+            <p className="newscardlist__dates">{article.publishedAt}</p>
+            <h2 className="newscardlist__subheading"> {article.title}</h2>
+            <p className="newscardlist__paragraph">{article.description}</p>
+          </div>
+          <p className="newscardlist__footer">{article.source.name}</p>
         </div>
-        <p className="newscardlist__footer">{article.source.name}</p>
-      </div>
+      </a>
     </div>
   );
 };

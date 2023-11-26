@@ -69,9 +69,8 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log("viewport", viewportWidth);
-  console.log("is modal on??", !!activeModal);
-  console.log("current page", currentPage);
+  console.log("viewport", viewportWidth < 767);
+
   const currentUserContextValue = {
     currentUser,
     setCurrentUser,
@@ -304,7 +303,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <SearchNewsContext.Provider value={{ searchInput, setSearchInput }}>
         <SavedNewsListContext.Provider
           value={{ savedArticles, setSavedArticles }}

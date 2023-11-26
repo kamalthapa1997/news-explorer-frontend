@@ -37,6 +37,7 @@
   .main {
     padding-top: 86px;
     padding-bottom: 0;
+    /* background: url("../../images/mobilewallppr.png") no-repeat center; */
   }
   .main__headings {
     font-size: 36px;
@@ -52,6 +53,9 @@
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
+  .main {
+    padding: 104px 0 48px;
+  }
   .main__headings {
     font-size: 36px;
     line-height: 1.4;

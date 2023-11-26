@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./MobileNavigationBar.css";
+import logoutBtnWhite from "../../images/logout.svg";
 
 const MobileNavigationBar = ({
   handleSignOut,
@@ -17,7 +18,7 @@ const MobileNavigationBar = ({
 
         {loggedIn ? (
           <div className="mobilenavigationbar__header ">
-            <Link className="navigation__home-link" to="/">
+            <Link className="mobilenavigationbar__home-link" to="/">
               <p
                 onClick={() => {
                   handleCloseMenuBar();
@@ -40,18 +41,21 @@ const MobileNavigationBar = ({
                 Saved articles
               </p>
             </Link>
-            <div className="mobilenavigationbar__profile">
-              <p className="mobilenavigationbar__username">Elise</p>
-
-              <button
-                onClick={handleSignOut}
-                className="mobilenavigationbar__logout-btn"
-              ></button>
-            </div>
+            <button
+              onClick={handleSignOut}
+              className={`mobilenavigationbar__profile `}
+            >
+              Lotus
+              <img
+                src={logoutBtnWhite}
+                alt="Logout Icon"
+                className="navigationbar__logout-logo"
+              />
+            </button>
           </div>
         ) : (
           <div className="mobilenavigationbar__infos">
-            <Link className="navigation__home-link" to="/">
+            <Link className="mobilenavigationbar__home-link" to="/">
               <p className="mobilenavigationbar__home"> Home</p>
             </Link>
             <button

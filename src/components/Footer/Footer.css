@@ -69,6 +69,8 @@
     gap: 16px;
     height: auto;
     align-items: baseline;
+    width: 100%;
+    justify-content: center;
   }
   .footer__texts {
     padding-bottom: 22px;
