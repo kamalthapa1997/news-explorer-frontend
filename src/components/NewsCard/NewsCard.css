@@ -30,7 +30,7 @@
   width: 240px;
   height: 56px;
   border-radius: 80px;
-  background: #e8e8e8;
+  background: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -38,7 +38,10 @@
   border: none;
   padding: 0;
 }
-
+.newscards__showmore:hover {
+  opacity: 0.9;
+  background: var(--main-white-hover, #e8e8e8);
+}
 .newscards__searchlist {
   background: #f5f6f7;
 }
