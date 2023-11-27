@@ -1,12 +1,15 @@
 import "./Section.css";
+import authorImg from "../../images/author.jpg";
 
 function Section() {
   return (
-    <div className="section">
+    <section className="section">
       <div className="section__about-me">
-        <div className="section__image-author"></div>
+        {/* <div className="section__image-author"></div> */}
+        <img className="section__image-author" src={authorImg} alt="author" />
+
         <div className="section__infos">
-          <h3 className="section__title">About the author.</h3>
+          <h3 className="section__title">About the author</h3>
           <p className="section__textcontent">
             This block describes the project author. Here you should indicate
             your name, what you do, and which development technologies you know.
@@ -17,7 +20,7 @@ function Section() {
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

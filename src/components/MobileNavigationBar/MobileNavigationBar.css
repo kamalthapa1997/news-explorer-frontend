@@ -5,18 +5,20 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
+.mobilenavigationbar__home-link {
+  text-decoration: none;
+}
 .mobilenavigationbar__menu {
   gap: 16px;
   width: 100%;
-  height: 230px;
+  /* height: 230px; */
   display: flex;
   flex-direction: column;
   background: #1a1b22;
 }
 .mobilenavigationbar__heading {
-  height: 56px;
-  padding: 15px;
+  /* height: 56px; */
+  padding: 16px;
   box-sizing: border-box;
   border-bottom: 1px solid white;
 }
@@ -24,7 +26,7 @@
 .mobilenavigationbar__title {
   margin: 0;
   color: var(--main-white, #fff);
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "Roboto Slab", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -32,19 +34,24 @@
   width: 117px;
 }
 .mobilenavigationbar__infos {
+  padding-bottom: 24px;
   width: 288px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  padding-left: 16px;
   gap: 22px;
   display: flex;
   flex-direction: column;
   max-width: 288px;
 
-  justify-content: center;
+  /* justify-content: center; */
 }
 .mobilenavigationbar__home {
+  height: 54px;
+  align-items: center;
+  display: flex;
   margin: 0;
   color: var(--main-white, #fff);
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -55,7 +62,7 @@
   height: 56px;
   color: var(--main-white, #fff);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -74,46 +81,53 @@
   flex-direction: column;
   width: 288px;
   justify-content: center;
-  margin: 0 auto;
-  align-items: end;
-  gap: 16px;
+  /* margin: 0 auto; */
+  align-items: flex-start;
+  /* gap: 16px; */
+  padding: 0 0 16px 16px;
 }
 .mobilenavigationbar__savednews-link {
   text-decoration: none;
 }
 .mobilenavigationbar__saved-article {
+  padding-top: 15px;
+  align-items: center;
+  display: flex;
+  height: 54px;
+  padding-bottom: 20px;
+
   margin: 0;
   color: #fff;
   text-align: center;
-  font-family: Roboto;
-  font-size: 16px;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
 }
 .mobilenavigationbar__profile {
-  height: 30px;
   border: 1px solid #fff;
   display: flex;
-  width: 100px;
+
   justify-content: center;
   align-items: center;
   border-radius: 100px;
   gap: 6px;
-}
-.mobilenavigationbar__username {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  background: #1a1b22;
   color: #fff;
-  font-family: Roboto;
+  font-family: "Roboto", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
   margin: 0;
 }
-.mobilenavigationbar__logout-btn {
-  height: 24px;
-  width: 24px;
-  border: none;
-  padding: 0;
-  background: url("../../images/logout.svg");
+
+@media (min-width: 768px) {
+  .mobilenavigationbar {
+    display: none;
+  }
 }

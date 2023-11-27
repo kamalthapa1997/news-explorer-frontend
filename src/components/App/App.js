@@ -1,52 +1,266 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
+
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Section from "../Section/Section";
 
 import LoginModal from "../LoginModal/LoginModal";
-import Preloader from "../Preloader/Preloader";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import Footer from "../Footer/Footer";
 
-import NewsCardList from "../NewsCard/NewsCard";
+import NewsCards from "../NewsCard/NewsCard";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
-import { getArticles } from "../../utils/ThirdPartyApi";
+
 import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar";
+import { getArticles } from "../../utils/ThirdPartyApi";
+// API
 
 // CONTEXTS
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
 import SavedNewsListContext from "../../contexts/SavedNewsListContext";
 import SearchNewsContext from "../../contexts/SearchNewsContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import IsLoadingContext from "../../contexts/IsLoadingContext";
+import CurrentLocationContext from "../../contexts/CurrentLocationContext";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [preloader, setPreloader] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [query, setQuery] = useState("tesla");
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem("loggedIn") === "true"
+  );
   const [articles, setArticles] = useState([]);
   const [menuBarOpen, setMenuBarOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [savedKeyword, setSavedKeyword] = useState([]);
+  const [savedKeyword, setSavedKeyword] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
+  const [mobileIsSaved, setMobileIsSaved] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
 
-  const handleSavedNewsList = (saveArticle) => {
-    console.log("saveArticle", saveArticle);
-    setSavedArticles(saveArticle);
+  const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
+  const [emailNotFoundError] = useState("");
+  // ------> VIEW PORT
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  // Get Token
+
+  const location = useLocation();
+  // const currentLocation = location.pathname;
+
+  const [currentPage, setCurrentPage] = useState(
+    localStorage.getItem("currentPage") || location.pathname
+  );
+
+  // ----->> USE EFFECT FOR VIEWPORT
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  console.log("viewport", viewportWidth < 767);
+
+  const currentUserContextValue = {
+    currentUser,
+    setCurrentUser,
+    loggedIn,
+    setLoggedIn,
   };
 
-  // TO HERE
-  const handleIsSaved = (e) => {
-    console.log(e);
+  const userSignInAccount = ({ email, password }) => {
+    setLoggedIn(true);
+    handleModalClose();
+  };
+  useEffect(() => {
+    localStorage.setItem("loggedIn", loggedIn);
+  }, [loggedIn]);
+  // console.log("LOGGED IN", loggedIn);
+
+  const userSignUpAccount = ({ email, password, userName }) => {
+    handleModalClose();
+  };
+
+  const handleDeleteSaved = (url) => {
+    setSavedArticles((preItems) => {
+      return preItems.filter((items) => {
+        return items.url !== url;
+      });
+    });
+  };
+
+  const handleSignOut = () => {
+    setLoggedIn(false);
+    localStorage.removeItem("savedArticles");
+
+    if (menuBarOpen) {
+      setMenuBarOpen(false);
+    }
+  };
+
+  // const handleTokenCheck = (token) => {
+  //   if (token) {
+  //     return auth
+  //       .checkTokenValidity(token)
+  //       .then((res) => {
+  //         setLoggedIn(true);
+
+  //         setCurrentUser(res.data);
+  //       })
+  //       .catch((err) => {
+  //         setLoggedIn(false);
+  //         console.error(err);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //     localStorage.removeItem("jwt");
+  //     setCurrentUser("");
+  //     setToken("");
+  //   }
+  // };
+
+  // ---USE EFFECTS---//
+  useEffect(() => {
+    localStorage.setItem("currentPage", location.pathname);
+    setCurrentPage(location.pathname);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const extractedKeywords = savedArticles.map((item) => item.tag).flat();
+    const uniqueKeywords = Array.from(new Set(extractedKeywords));
+    setSavedKeywordsLists(uniqueKeywords);
+  }, [savedArticles]);
+
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem("jwt");
+
+  //   if (jwt) {
+  //     auth
+  //       .checkTokenValidity(jwt)
+  //       .then((data) => {
+  //         setCurrentUser(data.data);
+  //         setToken(jwt);
+  //         setLoggedIn(token !== "" ? true : false);
+  //       })
+  //       .then(() => {
+  //         getNewsItems(jwt).then((data) => {
+  //           settingSavedArticles(data);
+  //         });
+  //       })
+
+  //       .catch((err) => {
+  //         console.error(`Token validation in useEffect has error: ${err}`);
+  //         setPreloader(false);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //     setPreloader(false);
+  //     localStorage.removeItem("jwt");
+  //     setToken("");
+  //   }
+  // }, [token]);
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        handleModalClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
+  useEffect(() => {
+    const storedArticles = localStorage.getItem("articles");
+
+    if (storedArticles) {
+      const parsedArticles = JSON.parse(storedArticles);
+      setArticles(parsedArticles);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      const savedArt = localStorage.getItem("savedArticles");
+      if (savedArt) {
+        const parsedArticles = JSON.parse(savedArt);
+        console.log("parsedArticles", parsedArticles);
+        setSavedArticles(parsedArticles);
+      }
+    } else {
+      setLoggedIn(false);
+      localStorage.removeItem("savedArticles");
+    }
+  }, [loggedIn]);
+
+  //-- HANDLE SAVE NEWS --//
+  const settingSavedArticles = (newsArticles) => {
+    const reversedArticles = newsArticles.reverse();
+    setSavedArticles(reversedArticles);
+    localStorage.setItem("savedArticles", JSON.stringify(reversedArticles));
+  };
+
+  const handleSaveNews = (article) => {
+    if (loggedIn) {
+      const isArticleSaved = savedArticles.some(
+        (newsCard) => newsCard.url === article.url
+      );
+
+      if (isArticleSaved) {
+        // const id = article._id;
+        const updatedSavedArticle = savedArticles.filter(
+          (newsCard) => newsCard.urlToImage !== article.urlToImage
+        );
+        settingSavedArticles(updatedSavedArticle);
+      } else {
+        console.log(searchInput, "searchInput");
+        const updatedArt = {
+          ...article,
+          tag: searchInput || article.author,
+        };
+        const updatedSavedArticle = [...savedArticles, updatedArt];
+        console.log("======>>", updatedSavedArticle);
+
+        settingSavedArticles(updatedSavedArticle);
+      }
+    } else {
+      setLoggedIn(false);
+    }
+  };
+
+  const handleMobileIsSaved = () => {
+    setMobileIsSaved(!mobileIsSaved);
+  };
+
+  const handleIsSaved = () => {
     setIsSaved(!isSaved);
   };
 
   const handleLoginModal = (e) => {
     setActiveModal("userLogin");
+
+    setHideHeader(!hideHeader);
+    setMenuBarOpen(false);
+
+    // hide the header
   };
+  console.log("HIDE HEADER??", hideHeader);
   const handleRegisterModal = () => {
     setActiveModal("userRegister");
   };
@@ -54,120 +268,126 @@ function App() {
     setActiveModal("");
   };
 
-  // Handle search form
+  //-- HANDLE SEARCH FORM --//
   const handleSearchNews = async (searchInput) => {
     setPreloader(true);
-
     try {
-      getArticles(searchInput)
-        .then((data) => {
-          setArticles(data.articles);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const data = await getArticles(searchInput);
+
+      if (data && data.articles) {
+        const newsArticles = data.articles.map((article) => ({
+          ...article,
+          tag: searchInput,
+        }));
+
+        setArticles(newsArticles);
+        localStorage.setItem("articles", JSON.stringify(newsArticles));
+      } else {
+        console.error("No articles found");
+      }
     } catch (error) {
       console.error("Nothing Found");
+    } finally {
+      setPreloader(false);
     }
-    setPreloader(false);
   };
-
-  useEffect(() => {
-    try {
-      getArticles()
-        .then((data) => {
-          localStorage.setItem("articles", JSON.stringify(data.articles));
-          setArticles(data.articles);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.error("Nothing Found");
-    }
-  }, []);
 
   //HANDLE MENU BAR
   const handleMenuBar = () => {
-    console.log("kkk");
     setMenuBarOpen(!menuBarOpen);
   };
   const handleCloseMenuBar = () => {
-    // setMenuBarOpen();
     setMenuBarOpen(!menuBarOpen);
-
+    setMobileIsSaved(!mobileIsSaved);
     setIsSaved(false);
   };
 
-  // Storing cards in local storage
-
   return (
-    <BrowserRouter>
-      <div className="App">
-        <SearchNewsContext.Provider value={{ searchInput, setSearchInput }}>
-          <SavedNewsListContext.Provider
-            value={{ savedArticles, setSavedArticles }}
+    <div className="app">
+      <SearchNewsContext.Provider value={{ searchInput, setSearchInput }}>
+        <SavedNewsListContext.Provider
+          value={{ savedArticles, setSavedArticles }}
+        >
+          <SavedNewsKeywordContext.Provider
+            value={{ savedKeyword, setSavedKeyword }}
           >
-            <SavedNewsKeywordContext.Provider
-              value={{ savedKeyword, setSavedKeyword }}
-            >
-              <div className="appBody">
-                <Header
-                  loggedIn={loggedIn}
-                  handleMenuBar={handleMenuBar}
-                  handleLoginModal={handleLoginModal}
-                  menuBarOpen={menuBarOpen}
-                  handleIsSaved={handleIsSaved}
-                  isSaved={isSaved}
-                />
-                <Switch>
-                  <Route exact path="/">
-                    <Main handleSearchNews={handleSearchNews} />
-                    <NewsCardList
-                      articles={articles}
-                      handleSavedNewsList={handleSavedNewsList}
-                    />
-                    <Section />
-                  </Route>
+            <CurrentUserContext.Provider value={{ currentUserContextValue }}>
+              <IsLoadingContext.Provider value={{ preloader, setPreloader }}>
+                <CurrentLocationContext.Provider
+                  value={{ currentPage, setCurrentPage }}
+                >
+                  <div className="appbody">
+                    {!(activeModal && viewportWidth < 767) && (
+                      <Header
+                        loggedIn={loggedIn}
+                        handleMenuBar={handleMenuBar}
+                        handleLoginModal={handleLoginModal}
+                        menuBarOpen={menuBarOpen}
+                        handleIsSaved={handleIsSaved}
+                        isSaved={isSaved}
+                        handleSignOut={handleSignOut}
+                        mobileIsSaved={mobileIsSaved}
+                      />
+                    )}
 
-                  <ProtectedRoute loggedIn={loggedIn} path="/saved-news">
-                    <SavedNewsHeader
-                      handleLoginModal={handleLoginModal}
-                      loggedIn={loggedIn}
-                      isSaved={true}
-                    />
-                  </ProtectedRoute>
-                </Switch>
+                    <Switch>
+                      <Route exact path="/">
+                        <Main handleSearchNews={handleSearchNews} />
 
-                <Footer />
+                        <NewsCards
+                          articles={articles}
+                          handleSaveNews={handleSaveNews}
+                        />
+                        <Section />
+                      </Route>
 
-                {menuBarOpen && (
-                  <MobileNavigationBar
-                    handleLoginModal={handleLoginModal}
-                    loggedIn={loggedIn}
-                    handleIsSaved={handleIsSaved}
-                    handleCloseMenuBar={handleCloseMenuBar}
-                  />
-                )}
-                {activeModal === "userLogin" && (
-                  <LoginModal
-                    handleModalClose={handleModalClose}
-                    handleRegisterModal={handleRegisterModal}
-                  />
-                )}
-                {activeModal === "userRegister" && (
-                  <RegisterModal
-                    handleLoginModal={handleLoginModal}
-                    handleModalClose={handleModalClose}
-                  />
-                )}
-                {preloader === true && <Preloader />}
-              </div>
-            </SavedNewsKeywordContext.Provider>
-          </SavedNewsListContext.Provider>
-        </SearchNewsContext.Provider>
-      </div>
-    </BrowserRouter>
+                      <ProtectedRoute loggedIn={loggedIn} path="/articles">
+                        <SavedNewsHeader
+                          savedKeywordsLists={savedKeywordsLists}
+                          handleLoginModal={handleLoginModal}
+                          loggedIn={loggedIn}
+                          isSaved={true}
+                          handleDeleteSaved={handleDeleteSaved}
+                          handleSignOut={handleSignOut}
+                        />
+                      </ProtectedRoute>
+                    </Switch>
+
+                    <Footer />
+
+                    {menuBarOpen && (
+                      <MobileNavigationBar
+                        MobileNavigationBar={MobileNavigationBar}
+                        handleLoginModal={handleLoginModal}
+                        loggedIn={loggedIn}
+                        handleMobileIsSaved={handleMobileIsSaved}
+                        handleCloseMenuBar={handleCloseMenuBar}
+                        handleSignOut={handleSignOut}
+                      />
+                    )}
+                    {activeModal === "userLogin" && (
+                      <LoginModal
+                        handleModalClose={handleModalClose}
+                        handleRegisterModal={handleRegisterModal}
+                        userSignInAccount={userSignInAccount}
+                        emailNotFoundError={emailNotFoundError}
+                      />
+                    )}
+                    {activeModal === "userRegister" && (
+                      <RegisterModal
+                        handleLoginModal={handleLoginModal}
+                        handleModalClose={handleModalClose}
+                        userSignUpAccount={userSignUpAccount}
+                      />
+                    )}
+                  </div>
+                </CurrentLocationContext.Provider>
+              </IsLoadingContext.Provider>
+            </CurrentUserContext.Provider>
+          </SavedNewsKeywordContext.Provider>
+        </SavedNewsListContext.Provider>
+      </SearchNewsContext.Provider>
+    </div>
   );
 }
 

@@ -1,13 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import SearchNewsContext from "../../contexts/SearchNewsContext";
-
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
+import "./SearchForm.css";
 
 const SearchForm = ({ handleSearchNews }) => {
-  // const [searchInput, setSearchInput] = useState("");
   const { searchInput, setSearchInput } = useContext(SearchNewsContext);
-  const { savedKeyword } = useContext(SavedNewsKeywordContext);
-  console.log("savedKeyword", savedKeyword);
+  const { setSavedKeyword } = useContext(SavedNewsKeywordContext);
+
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
   };
@@ -15,18 +14,31 @@ const SearchForm = ({ handleSearchNews }) => {
     e.preventDefault();
     handleSearchNews(searchInput);
   };
-  // console.log(searchInput);
+
+  useEffect(() => {
+    if (searchInput) {
+      setSavedKeyword(searchInput);
+    } else {
+      setSavedKeyword("");
+    }
+  }, [searchInput, setSavedKeyword]);
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit} className="main__search-form">
+      <form onSubmit={handleSearchSubmit} className="searchform">
         <input
           type="text"
-          className="main__search-input"
+          className="searchform__input"
           placeholder="Nature"
           onChange={handleSearchInput}
         />
-        <button className="main__search-button" placeholder="Enter topic">
+        <button
+          // onClick={handleClick}
+          className={`searchform__button
+         
+          `}
+          placeholder="Enter topic"
+        >
           Search
         </button>
       </form>
