@@ -49,7 +49,8 @@ const MobileNavigationBar = ({
               <img
                 src={logoutBtnWhite}
                 alt="Logout Icon"
-                className="navigationbar__logout-logo"
+                // FIX
+                className="mobilenavigationbar__logout-logo"
               />
             </button>
           </div>

@@ -48,7 +48,11 @@ const NavigationBar = ({
       </Link>
       {loggedIn ? (
         <div className={`navigationbar__infos `}>
-          <Link onClick={menuBarOpen} className="navigation__home-link" to="/">
+          <Link
+            onClick={menuBarOpen}
+            className="navigationbar__home-link"
+            to="/"
+          >
             <p
               className={`navigationbar__homepage ${setHomeBorder} ${setTextColor} `}
             >
@@ -70,7 +74,7 @@ const NavigationBar = ({
             onClick={handlelogOut}
             className={`navigationbar__logout ${setTextColor}  `}
           >
-            Lotus
+            <span className="navigationbar__logout-text">Elise </span>
             <img
               src={isSaved ? logoutBtnDark : logoutBtnWhite}
               alt="Logout Icon"

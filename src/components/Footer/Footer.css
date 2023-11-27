@@ -54,7 +54,7 @@
     justify-content: flex-start;
     padding: 0;
     height: auto;
-    gap: 38px;
+    gap: 40px;
   }
   .footer__subtexts {
     width: 200px;
@@ -71,6 +71,7 @@
     align-items: baseline;
     width: 100%;
     justify-content: center;
+    padding-top: 20px;
   }
   .footer__texts {
     padding-bottom: 22px;
@@ -79,5 +80,6 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .footer__infos {
     padding: 0 40px;
+    max-height: 64px;
   }
 }

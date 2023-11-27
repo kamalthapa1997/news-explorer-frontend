@@ -37,32 +37,35 @@
   .main {
     padding-top: 86px;
     padding-bottom: 0;
-    /* background: url("../../images/mobilewallppr.png") no-repeat center; */
   }
   .main__headings {
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 40px;
     width: 285px;
+    font-size: 36px;
+
+    line-height: 40px; /* 111.111% */
   }
   .main__textcontent {
-    font-size: 18px;
     width: 288px;
     padding: 16px 0 0 0;
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
   .main {
-    padding: 104px 0 48px;
+    /* padding: 104px 0 48px; */
+    align-items: flex-start;
+    padding: 104px 156px 48px 160px;
   }
   .main__headings {
     font-size: 36px;
-    line-height: 1.4;
+    line-height: 111.111%;
     width: 452px;
+    height: 80px;
+    padding-left: 3px;
   }
   .main__textcontent {
     width: 452px;
+    padding-top: 16px;
+    padding-bottom: 48px;
   }
 
   .main__search-button {

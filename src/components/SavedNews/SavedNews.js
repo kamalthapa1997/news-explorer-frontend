@@ -9,7 +9,7 @@ const SavedNews = ({ handleDeleteSaved, savedKeywordsLists }) => {
   const { savedArticles } = useContext(SavedNewsListContext);
 
   return (
-    <div className="savednews ">
+    <section className="savednews">
       {/* savednewsheader */}
       <div className="savednews__titles">
         <p className="savednews__text">Saved articles</p>
@@ -17,7 +17,7 @@ const SavedNews = ({ handleDeleteSaved, savedKeywordsLists }) => {
         <SavedKeywords items={savedKeywordsLists} />
       </div>
       <SavedNewsList handleDeleteSaved={handleDeleteSaved} />
-    </div>
+    </section>
   );
 };
 

@@ -316,7 +316,7 @@ function App() {
                 <CurrentLocationContext.Provider
                   value={{ currentPage, setCurrentPage }}
                 >
-                  <div className="appBody">
+                  <div className="appbody">
                     {!(activeModal && viewportWidth < 767) && (
                       <Header
                         loggedIn={loggedIn}
