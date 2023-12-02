@@ -1,3 +1,5 @@
+// stage-react-auth
+
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
@@ -81,14 +83,29 @@ function App() {
   const userSignInAccount = ({ email, password }) => {
     setLoggedIn(true);
     handleModalClose();
+
+    try {
+      auth.userSignIn({ email, password }).then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          handleTokenCheck(data.token);
+          setToken(data.token);
+        }
+      });
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
-  useEffect(() => {
-    localStorage.setItem("loggedIn", loggedIn);
-  }, [loggedIn]);
-  // console.log("LOGGED IN", loggedIn);
 
   const userSignUpAccount = ({ email, password, userName }) => {
     handleModalClose();
+    try {
+      auth.registerNewUser({ email, password, userName });
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDeleteSaved = (url) => {
@@ -108,26 +125,26 @@ function App() {
     }
   };
 
-  // const handleTokenCheck = (token) => {
-  //   if (token) {
-  //     return auth
-  //       .checkTokenValidity(token)
-  //       .then((res) => {
-  //         setLoggedIn(true);
+  const handleTokenCheck = (token) => {
+    if (token) {
+      return auth
+        .checkTokenValidity(token)
+        .then((res) => {
+          setLoggedIn(true);
 
-  //         setCurrentUser(res.data);
-  //       })
-  //       .catch((err) => {
-  //         setLoggedIn(false);
-  //         console.error(err);
-  //       });
-  //   } else {
-  //     setLoggedIn(false);
-  //     localStorage.removeItem("jwt");
-  //     setCurrentUser("");
-  //     setToken("");
-  //   }
-  // };
+          setCurrentUser(res.data);
+        })
+        .catch((err) => {
+          setLoggedIn(false);
+          console.error(err);
+        });
+    } else {
+      setLoggedIn(false);
+      localStorage.removeItem("jwt");
+      setCurrentUser("");
+      setToken("");
+    }
+  };
 
   // ---USE EFFECTS---//
   useEffect(() => {
@@ -141,34 +158,34 @@ function App() {
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
 
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem("jwt");
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
 
-  //   if (jwt) {
-  //     auth
-  //       .checkTokenValidity(jwt)
-  //       .then((data) => {
-  //         setCurrentUser(data.data);
-  //         setToken(jwt);
-  //         setLoggedIn(token !== "" ? true : false);
-  //       })
-  //       .then(() => {
-  //         getNewsItems(jwt).then((data) => {
-  //           settingSavedArticles(data);
-  //         });
-  //       })
+    if (jwt) {
+      auth
+        .checkTokenValidity(jwt)
+        .then((data) => {
+          setCurrentUser(data.data);
+          setToken(jwt);
+          setLoggedIn(token !== "" ? true : false);
+        })
+        .then(() => {
+          getNewsItems(jwt).then((data) => {
+            settingSavedArticles(data);
+          });
+        })
 
-  //       .catch((err) => {
-  //         console.error(`Token validation in useEffect has error: ${err}`);
-  //         setPreloader(false);
-  //       });
-  //   } else {
-  //     setLoggedIn(false);
-  //     setPreloader(false);
-  //     localStorage.removeItem("jwt");
-  //     setToken("");
-  //   }
-  // }, [token]);
+        .catch((err) => {
+          console.error(`Token validation in useEffect has error: ${err}`);
+          setPreloader(false);
+        });
+    } else {
+      setLoggedIn(false);
+      setPreloader(false);
+      localStorage.removeItem("jwt");
+      setToken("");
+    }
+  }, [token]);
 
   useEffect(() => {
     if (!activeModal) return;
