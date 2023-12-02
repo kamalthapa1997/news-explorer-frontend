@@ -11,7 +11,6 @@ const SavedNewsList = ({ handleDeleteSaved }) => {
 
   const loggedIn = currentUserContextValue.loggedIn;
   const reversedSavedArticles = savedArticles.reverse();
-  console.log(reversedSavedArticles);
 
   return (
     // <div className="savednewslist">

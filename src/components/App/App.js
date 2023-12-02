@@ -1,4 +1,4 @@
-// stage-react-auth
+// TEST REACT AUTH
 
 import "./App.css";
 import React, { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import Main from "../Main/Main";
 import Section from "../Section/Section";
 
 import LoginModal from "../LoginModal/LoginModal";
+// import Preloader from "../Preloader/Preloader";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import Footer from "../Footer/Footer";
 
@@ -19,6 +20,8 @@ import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar";
 import { getArticles } from "../../utils/ThirdPartyApi";
 // API
+import * as auth from "../../utils/auth";
+import { getNewsItems, postNewsItems, deleteSaveCard } from "../../utils/Api";
 
 // CONTEXTS
 import SavedNewsKeywordContext from "../../contexts/SavedNewsKeyword";
@@ -43,6 +46,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [mobileIsSaved, setMobileIsSaved] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
+  const [token, setToken] = useState("");
 
   const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
   const [emailNotFoundError] = useState("");
@@ -71,7 +75,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log("viewport", viewportWidth < 767);
 
   const currentUserContextValue = {
     currentUser,
@@ -217,7 +220,6 @@ function App() {
       const savedArt = localStorage.getItem("savedArticles");
       if (savedArt) {
         const parsedArticles = JSON.parse(savedArt);
-        console.log("parsedArticles", parsedArticles);
         setSavedArticles(parsedArticles);
       }
     } else {
@@ -228,15 +230,18 @@ function App() {
 
   //-- HANDLE SAVE NEWS --//
   const settingSavedArticles = (newsArticles) => {
-    const reversedArticles = newsArticles.reverse();
+    const reversedArticles = newsArticles.data.reverse();
+    console.log("======>>", reversedArticles);
+
     setSavedArticles(reversedArticles);
     localStorage.setItem("savedArticles", JSON.stringify(reversedArticles));
   };
 
   const handleSaveNews = (article) => {
+    console.log(article);
     if (loggedIn) {
       const isArticleSaved = savedArticles.some(
-        (newsCard) => newsCard.url === article.url
+        (newsCard) => newsCard.link === article.url
       );
 
       if (isArticleSaved) {
@@ -246,13 +251,11 @@ function App() {
         );
         settingSavedArticles(updatedSavedArticle);
       } else {
-        console.log(searchInput, "searchInput");
         const updatedArt = {
           ...article,
           tag: searchInput || article.author,
         };
         const updatedSavedArticle = [...savedArticles, updatedArt];
-        console.log("======>>", updatedSavedArticle);
 
         settingSavedArticles(updatedSavedArticle);
       }
@@ -277,7 +280,7 @@ function App() {
 
     // hide the header
   };
-  console.log("HIDE HEADER??", hideHeader);
+
   const handleRegisterModal = () => {
     setActiveModal("userRegister");
   };
