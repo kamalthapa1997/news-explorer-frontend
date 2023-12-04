@@ -49,7 +49,7 @@ function App() {
   const [token, setToken] = useState("");
 
   const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
-  const [emailNotFoundError] = useState("");
+  const [emailNotFoundError, setEmailNotFoundError] = useState("");
   // ------> VIEW PORT
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
@@ -85,7 +85,8 @@ function App() {
 
   const userSignInAccount = ({ email, password }) => {
     setLoggedIn(true);
-    handleModalClose();
+    console.log(email, password);
+    // handleModalClose();
 
     try {
       auth.userSignIn({ email, password }).then((data) => {
@@ -93,35 +94,53 @@ function App() {
           localStorage.setItem("jwt", data.token);
           handleTokenCheck(data.token);
           setToken(data.token);
+          handleModalClose();
+        } else {
+          setEmailNotFoundError("Incorrect email or password.");
         }
       });
-      handleModalClose();
+      // handleModalClose();
     } catch (error) {
+      // setEmailNotFoundError(error);
       console.error(error);
     }
   };
 
   const userSignUpAccount = ({ email, password, userName }) => {
-    handleModalClose();
     try {
-      auth.registerNewUser({ email, password, userName });
-      handleModalClose();
+      auth.registerNewUser({ email, password, userName }).then((data) => {
+        console.log(data.email);
+        if (data.email) {
+          handleModalClose();
+        } else {
+          setEmailNotFoundError("This email is not available");
+        }
+      });
     } catch (error) {
       console.error(error);
     }
   };
+  console.log(111, emailNotFoundError);
 
-  const handleDeleteSaved = (url) => {
-    setSavedArticles((preItems) => {
-      return preItems.filter((items) => {
-        return items.url !== url;
+  const handleDeleteSaved = (id) => {
+    console.log(id);
+    deleteSaveCard(id)
+      .then(() => {
+        setSavedArticles((preItems) => {
+          return preItems.filter((items) => {
+            return items._id !== id;
+          });
+        });
+      })
+      .catch((err) => {
+        console.error("Error while deleting article.", err);
       });
-    });
   };
 
   const handleSignOut = () => {
     setLoggedIn(false);
     localStorage.removeItem("savedArticles");
+    localStorage.removeItem("jwt");
 
     if (menuBarOpen) {
       setMenuBarOpen(false);
@@ -156,7 +175,8 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const extractedKeywords = savedArticles.map((item) => item.tag).flat();
+    const extractedKeywords = savedArticles.map((item) => item.keyword).flat();
+    console.log(extractedKeywords);
     const uniqueKeywords = Array.from(new Set(extractedKeywords));
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
@@ -174,7 +194,7 @@ function App() {
         })
         .then(() => {
           getNewsItems(jwt).then((data) => {
-            settingSavedArticles(data);
+            settingSavedArticles(data.data);
           });
         })
 
@@ -221,6 +241,7 @@ function App() {
       if (savedArt) {
         const parsedArticles = JSON.parse(savedArt);
         setSavedArticles(parsedArticles);
+        // setSavedArticles(savedArt);
       }
     } else {
       setLoggedIn(false);
@@ -230,34 +251,106 @@ function App() {
 
   //-- HANDLE SAVE NEWS --//
   const settingSavedArticles = (newsArticles) => {
-    const reversedArticles = newsArticles.data.reverse();
-    console.log("======>>", reversedArticles);
+    // const reversedArticles = newsArticles.reverse();
+    console.log(newsArticles);
+    const reversedArticles = newsArticles;
 
     setSavedArticles(reversedArticles);
     localStorage.setItem("savedArticles", JSON.stringify(reversedArticles));
   };
 
-  const handleSaveNews = (article) => {
-    console.log(article);
+  // const handleSaveNews = (article) => {
+  //   console.log(article);
+
+  //   if (loggedIn) {
+  //     const isArticleSaved = savedArticles.some(
+  //       (newsCard) => newsCard.link === article.url
+  //     );
+
+  //     console.log(isArticleSaved);
+
+  //     if (isArticleSaved) {
+  //       const id = article._id;
+  //       const updatedSavedArticle = savedArticles.filter(
+  //         (newsCard) => newsCard.urlToImage !== article.urlToImage
+  //       );
+  //       settingSavedArticles(updatedSavedArticle);
+  //     } else {
+  //       const updatedArt = {
+  //         ...article,
+  //         tag: searchInput || article.author,
+  //       };
+  //       console.log("savedArticles", savedArticles);
+  //       const updatedSavedArticle = [...savedArticles, updatedArt];
+  //       console.log(
+  //         "updatedSavedArticle",
+  //         updatedSavedArticle.length,
+  //         updatedSavedArticle
+  //       );
+  //       settingSavedArticles(updatedSavedArticle);
+  //     }
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // };
+
+  // console.log(articles);
+
+  const handleSaveNews = async (article) => {
     if (loggedIn) {
       const isArticleSaved = savedArticles.some(
         (newsCard) => newsCard.link === article.url
       );
 
-      if (isArticleSaved) {
-        // const id = article._id;
-        const updatedSavedArticle = savedArticles.filter(
-          (newsCard) => newsCard.urlToImage !== article.urlToImage
-        );
-        settingSavedArticles(updatedSavedArticle);
-      } else {
-        const updatedArt = {
-          ...article,
-          tag: searchInput || article.author,
-        };
-        const updatedSavedArticle = [...savedArticles, updatedArt];
+      console.log(isArticleSaved);
+      try {
+        if (isArticleSaved) {
+          // If article is already saved, delete i
+          // const updatedSavedArticle = await deleteSaveCard(article._id);
+          // settingSavedArticles(updatedSavedArticle);
 
-        settingSavedArticles(updatedSavedArticle);
+          handleDeleteSaved(article._id);
+        } else {
+          // If article is not saved, save it
+
+          const updatedArt = {
+            ...article,
+            tag: searchInput || article.author,
+          };
+
+          postNewsItems(updatedArt)
+            .then((item) => {
+              if (item.data) {
+                const newArticle = item.data;
+                const updatedSavedArticle = [...savedArticles, newArticle];
+                const updatedArt = articles.map((artcl) => {
+                  if (artcl.url === newArticle.link) {
+                    const articleUpdate = { ...artcl, _id: newArticle._id };
+                    return articleUpdate;
+                  } else {
+                    return artcl;
+                  }
+                });
+                console.log("........====", updatedArt);
+                setArticles(updatedArt);
+                localStorage.setItem("articles", JSON.stringify(updatedArt));
+
+                settingSavedArticles(updatedSavedArticle);
+              }
+            })
+            .catch((err) => {
+              console.error("Error while saving article.", err);
+            });
+          // const savedArticle = await postNewsItems(updatedArt);
+
+          // console.log("savedArticles ======>>>>", savedArticle);
+
+          // const updatedSavedArticle = [...savedArticles, updatedArt];
+          // settingSavedArticles(updatedSavedArticle);
+        }
+      } catch (error) {
+        console.error("Error while handling save news:", error);
+        // Handle the error as needed, e.g., show an error message to the user
       }
     } else {
       setLoggedIn(false);
@@ -395,6 +488,7 @@ function App() {
                     )}
                     {activeModal === "userRegister" && (
                       <RegisterModal
+                        emailNotFoundError={emailNotFoundError}
                         handleLoginModal={handleLoginModal}
                         handleModalClose={handleModalClose}
                         userSignUpAccount={userSignUpAccount}

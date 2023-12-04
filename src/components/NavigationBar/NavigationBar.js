@@ -4,6 +4,7 @@ import currentPageContext from "../../contexts/CurrentLocationContext";
 import { useContext } from "react";
 import logoutBtnWhite from "../../images/logout.svg";
 import logoutBtnDark from "../../images/logout-datk.svg";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const NavigationBar = ({
   handleLoginModal,
@@ -13,6 +14,10 @@ const NavigationBar = ({
   handlelogOut,
 }) => {
   const currentPage = useContext(currentPageContext);
+
+  const currentUserContextValue = useContext(CurrentUserContext);
+  const currentUser =
+    currentUserContextValue.currentUserContextValue.currentUser;
 
   const setTextColor = isSaved
     ? "navigationbar__text-black"
@@ -74,7 +79,9 @@ const NavigationBar = ({
             onClick={handlelogOut}
             className={`navigationbar__logout ${setTextColor}  `}
           >
-            <span className="navigationbar__logout-text">Elise </span>
+            <span className="navigationbar__logout-text">
+              {currentUser.name}{" "}
+            </span>
             <img
               src={isSaved ? logoutBtnDark : logoutBtnWhite}
               alt="Logout Icon"

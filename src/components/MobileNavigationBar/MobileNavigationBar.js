@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./MobileNavigationBar.css";
 import logoutBtnWhite from "../../images/logout.svg";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
 
 const MobileNavigationBar = ({
   handleSignOut,
@@ -9,6 +11,10 @@ const MobileNavigationBar = ({
   handleCloseMenuBar,
   handleMobileIsSaved,
 }) => {
+  const currentUserContextValue = useContext(CurrentUserContext);
+  const currentUser =
+    currentUserContextValue.currentUserContextValue.currentUser;
+
   return (
     <div className="mobilenavigationbar">
       <div className="mobilenavigationbar__menu">
@@ -45,7 +51,7 @@ const MobileNavigationBar = ({
               onClick={handleSignOut}
               className={`mobilenavigationbar__profile `}
             >
-              Lotus
+              {currentUser.name}
               <img
                 src={logoutBtnWhite}
                 alt="Logout Icon"
