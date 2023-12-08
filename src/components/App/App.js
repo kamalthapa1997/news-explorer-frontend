@@ -53,6 +53,12 @@ function App() {
   // ------> VIEW PORT
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
+  const [isSignInModalOpen, setSignInModalOpen] = useState(false);
+  const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
+
+  console.log("isSignInModalOpen", isSignInModalOpen);
+  console.log("isSignUpModalOpen", isSignUpModalOpen);
+
   // Get Token
 
   const location = useLocation();
@@ -84,10 +90,6 @@ function App() {
   };
 
   const userSignInAccount = ({ email, password }) => {
-    setLoggedIn(true);
-    console.log(email, password);
-    // handleModalClose();
-
     try {
       auth.userSignIn({ email, password }).then((data) => {
         if (data.token) {
@@ -96,12 +98,14 @@ function App() {
           setToken(data.token);
           handleModalClose();
         } else {
-          setEmailNotFoundError("Incorrect email or password.");
+          if (isSignInModalOpen) {
+            setEmailNotFoundError("Incorrect email or password.");
+          } else {
+            setEmailNotFoundError("");
+          }
         }
       });
-      // handleModalClose();
     } catch (error) {
-      // setEmailNotFoundError(error);
       console.error(error);
     }
   };
@@ -113,14 +117,17 @@ function App() {
         if (data.email) {
           handleModalClose();
         } else {
-          setEmailNotFoundError("This email is not available");
+          if (isSignUpModalOpen) {
+            setEmailNotFoundError("This email is not available");
+          } else {
+            setEmailNotFoundError("");
+          }
         }
       });
     } catch (error) {
       console.error(error);
     }
   };
-  console.log(111, emailNotFoundError);
 
   const handleDeleteSaved = (id) => {
     console.log(id);
@@ -367,7 +374,7 @@ function App() {
 
   const handleLoginModal = (e) => {
     setActiveModal("userLogin");
-
+    setSignInModalOpen(true);
     setHideHeader(!hideHeader);
     setMenuBarOpen(false);
 
@@ -376,9 +383,13 @@ function App() {
 
   const handleRegisterModal = () => {
     setActiveModal("userRegister");
+    setSignUpModalOpen(true);
   };
   const handleModalClose = () => {
     setActiveModal("");
+    setSignInModalOpen(false);
+    setSignUpModalOpen(false);
+    setEmailNotFoundError("");
   };
 
   //-- HANDLE SEARCH FORM --//
