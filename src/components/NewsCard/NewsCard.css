@@ -146,6 +146,7 @@
     max-width: 768px;
     margin: auto;
     padding-top: 32px;
+    gap: 8px;
   }
 }
 @media (min-width: 1024px) {

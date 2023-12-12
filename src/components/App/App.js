@@ -56,9 +56,6 @@ function App() {
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
 
-  console.log("isSignInModalOpen", isSignInModalOpen);
-  console.log("isSignUpModalOpen", isSignUpModalOpen);
-
   // Get Token
 
   const location = useLocation();
@@ -113,7 +110,6 @@ function App() {
   const userSignUpAccount = ({ email, password, userName }) => {
     try {
       auth.registerNewUser({ email, password, userName }).then((data) => {
-        console.log(data.email);
         if (data.email) {
           handleModalClose();
         } else {
@@ -130,7 +126,6 @@ function App() {
   };
 
   const handleDeleteSaved = (id) => {
-    console.log(id);
     deleteSaveCard(id)
       .then(() => {
         setSavedArticles((preItems) => {
@@ -183,7 +178,7 @@ function App() {
 
   useEffect(() => {
     const extractedKeywords = savedArticles.map((item) => item.keyword).flat();
-    console.log(extractedKeywords);
+
     const uniqueKeywords = Array.from(new Set(extractedKeywords));
     setSavedKeywordsLists(uniqueKeywords);
   }, [savedArticles]);
@@ -245,7 +240,8 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       const savedArt = localStorage.getItem("savedArticles");
-      if (savedArt) {
+
+      if (savedArt && !undefined) {
         const parsedArticles = JSON.parse(savedArt);
         setSavedArticles(parsedArticles);
         // setSavedArticles(savedArt);
@@ -259,7 +255,7 @@ function App() {
   //-- HANDLE SAVE NEWS --//
   const settingSavedArticles = (newsArticles) => {
     // const reversedArticles = newsArticles.reverse();
-    console.log(newsArticles);
+
     const reversedArticles = newsArticles;
 
     setSavedArticles(reversedArticles);

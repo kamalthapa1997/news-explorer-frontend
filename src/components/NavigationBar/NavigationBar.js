@@ -95,7 +95,7 @@ const NavigationBar = ({
           <p className={` navigationbar__homepage ${setHomeBorder}`}>Home</p>
           <p className="navigationbar__login" onClick={handleLoginModal}>
             {" "}
-            Signin
+            Sign in
           </p>
         </div>
       )}

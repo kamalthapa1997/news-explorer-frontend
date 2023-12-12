@@ -1,5 +1,10 @@
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "https://api.newsofworld.twilightparadox.com"
+    : "http://localhost:3000";
 
+console.log(process.env);
+console.log(BASE_URL);
 const getToken = (token) => {
   if (token) {
     const currentToken = localStorage.getItem(token);
@@ -14,9 +19,6 @@ export const processResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  // return Promise.reject(`Error: ${res.status}`);
-  console.log(res);
-  return res;
 };
 
 export async function getNewsItems(token) {

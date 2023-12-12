@@ -1,6 +1,14 @@
-import { BASE_URL, processResponse } from "./Api";
+import { BASE_URL } from "./Api";
 
 // SIGNUP
+export const response = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return res;
+};
+
 export async function registerNewUser({ email, password, userName }) {
   const res = await fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -14,7 +22,7 @@ export async function registerNewUser({ email, password, userName }) {
       password: password,
     }),
   });
-  return processResponse(res);
+  return response(res);
 }
 
 // SIGNIN
@@ -30,7 +38,7 @@ export async function userSignIn({ email, password }) {
       password: password,
     }),
   });
-  return processResponse(res);
+  return response(res);
 }
 
 //GET USER ARTICLES
@@ -43,7 +51,7 @@ export async function gettingUserItems(token) {
       authorization: `Bearer ${token}`,
     },
   });
-  return processResponse(res);
+  return response(res);
 }
 
 // Check token validity
@@ -56,6 +64,7 @@ export async function checkTokenValidity(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-  const data = processResponse(res);
+  const data = response(res);
+
   return data;
 }
