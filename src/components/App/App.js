@@ -21,6 +21,7 @@ import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar";
 import { getArticles } from "../../utils/ThirdPartyApi";
 // API
 import * as auth from "../../utils/auth";
+import * as mainapi from "../../utils/MainApi";
 import { getNewsItems, postNewsItems, deleteSaveCard } from "../../utils/Api";
 
 // CONTEXTS
@@ -88,7 +89,7 @@ function App() {
 
   const userSignInAccount = ({ email, password }) => {
     try {
-      auth.userSignIn({ email, password }).then((data) => {
+      mainapi.userSignIn({ email, password }).then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           handleTokenCheck(data.token);
@@ -109,7 +110,7 @@ function App() {
 
   const userSignUpAccount = ({ email, password, userName }) => {
     try {
-      auth.registerNewUser({ email, password, userName }).then((data) => {
+      mainapi.registerNewUser({ email, password, userName }).then((data) => {
         if (data.email) {
           handleModalClose();
         } else {
