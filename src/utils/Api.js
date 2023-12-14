@@ -1,5 +1,5 @@
 export const BASE_URL =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === "production"
     ? "https://api.newsofworld.twilightparadox.com"
     : "http://localhost:3000";
 
