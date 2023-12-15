@@ -51,6 +51,7 @@ function App() {
 
   const [savedKeywordsLists, setSavedKeywordsLists] = useState([]);
   const [emailNotFoundError, setEmailNotFoundError] = useState("");
+  const [searched, setSearched] = useState(false);
   // ------> VIEW PORT
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
@@ -389,8 +390,11 @@ function App() {
     setEmailNotFoundError("");
   };
 
+  console.log("searched", searched);
   //-- HANDLE SEARCH FORM --//
   const handleSearchNews = async (searchInput) => {
+    // SEARCHED TRUE
+    setSearched(true);
     setPreloader(true);
     try {
       const data = await getArticles(searchInput);
@@ -458,6 +462,7 @@ function App() {
                         <NewsCards
                           articles={articles}
                           handleSaveNews={handleSaveNews}
+                          searched={searched}
                         />
                         <Section />
                       </Route>

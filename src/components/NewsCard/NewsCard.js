@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import articleNotFound from "../../images/no-results.svg";
 import Preloader from "../Preloader/Preloader";
 
-const NewsCards = ({ articles, handleSaveNews }) => {
+const NewsCards = ({ articles, handleSaveNews, searched }) => {
   const [visibleCount, setVisibleCount] = useState(3);
   const { preloader } = useContext(IsLoadingContext);
 
@@ -19,7 +19,7 @@ const NewsCards = ({ articles, handleSaveNews }) => {
     <section className="newscards">
       {preloader ? (
         <Preloader />
-      ) : articles.length === 0 ? (
+      ) : searched && articles.length === 0 ? (
         <div className="newscards__notfound">
           <img
             className="newscards__notfound-logo"

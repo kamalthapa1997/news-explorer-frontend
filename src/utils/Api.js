@@ -3,8 +3,6 @@ export const BASE_URL =
     ? "https://api.newsofworld.twilightparadox.com"
     : "http://localhost:3000";
 
-console.log(process.env);
-console.log(BASE_URL);
 const getToken = (token) => {
   if (token) {
     const currentToken = localStorage.getItem(token);
