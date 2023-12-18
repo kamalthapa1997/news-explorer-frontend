@@ -149,9 +149,9 @@
 }
 .popupwithform__submit {
   border-radius: 100px;
-  background: var(--simulator-gray-selected, #e6e8eb);
+
   padding: 0;
-  color: var(--simulator-gray-text, #b6bcbf);
+
   text-align: center;
   font-family: "Roboto", Arial;
   font-size: 18px;
@@ -164,10 +164,19 @@
   width: 358px;
   height: 64px;
 }
-.popupwithform__submit:hover {
+/* .popupwithform__submit:hover {
+  background: #2f71e5;
+  color: #fff;
+} */
+.popupwithform__submit-on {
   background: #2f71e5;
   color: #fff;
 }
+.popupwithform__submit-off {
+  background: var(--simulator-gray-selected, #e6e8eb);
+  color: var(--simulator-gray-text, #b6bcbf);
+}
+
 .popupwithform__form-error {
   height: 14px;
   padding-top: 4px;

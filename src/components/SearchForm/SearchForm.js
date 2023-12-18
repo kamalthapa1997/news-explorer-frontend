@@ -24,25 +24,24 @@ const SearchForm = ({ handleSearchNews }) => {
   }, [searchInput, setSavedKeyword]);
 
   return (
-    <>
-      <form onSubmit={handleSearchSubmit} className="searchform">
-        <input
-          type="text"
-          className="searchform__input"
-          placeholder="Nature"
-          onChange={handleSearchInput}
-        />
-        <button
-          // onClick={handleClick}
-          className={`searchform__button
+    <form onSubmit={handleSearchSubmit} className="searchform">
+      <input
+        type="text"
+        className="searchform__input"
+        placeholder="Enter a topic"
+        value={searchInput}
+        onChange={handleSearchInput}
+      />
+      <button
+        // onClick={handleClick}
+        className={`searchform__button
          
           `}
-          placeholder="Enter topic"
-        >
-          Search
-        </button>
-      </form>
-    </>
+        placeholder="Enter topic"
+      >
+        Search
+      </button>
+    </form>
   );
 };
 export default SearchForm;

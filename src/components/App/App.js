@@ -60,6 +60,7 @@ function App() {
 
   // Get Token
 
+  console.log("Length of articles =", articles.length);
   const location = useLocation();
   // const currentLocation = location.pathname;
 
@@ -214,21 +215,21 @@ function App() {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (!activeModal) return;
+  // useEffect(() => {
+  //   if (!activeModal) return;
 
-    const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        handleModalClose();
-      }
-    };
+  //   const handleEscClose = (e) => {
+  //     if (e.key === "Escape") {
+  //       handleModalClose();
+  //     }
+  //   };
 
-    document.addEventListener("keydown", handleEscClose);
+  //   document.addEventListener("keydown", handleEscClose);
 
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]);
+  //   return () => {
+  //     document.removeEventListener("keydown", handleEscClose);
+  //   };
+  // }, [activeModal]);
 
   useEffect(() => {
     const storedArticles = localStorage.getItem("articles");
@@ -264,50 +265,12 @@ function App() {
     localStorage.setItem("savedArticles", JSON.stringify(reversedArticles));
   };
 
-  // const handleSaveNews = (article) => {
-  //   console.log(article);
-
-  //   if (loggedIn) {
-  //     const isArticleSaved = savedArticles.some(
-  //       (newsCard) => newsCard.link === article.url
-  //     );
-
-  //     console.log(isArticleSaved);
-
-  //     if (isArticleSaved) {
-  //       const id = article._id;
-  //       const updatedSavedArticle = savedArticles.filter(
-  //         (newsCard) => newsCard.urlToImage !== article.urlToImage
-  //       );
-  //       settingSavedArticles(updatedSavedArticle);
-  //     } else {
-  //       const updatedArt = {
-  //         ...article,
-  //         tag: searchInput || article.author,
-  //       };
-  //       console.log("savedArticles", savedArticles);
-  //       const updatedSavedArticle = [...savedArticles, updatedArt];
-  //       console.log(
-  //         "updatedSavedArticle",
-  //         updatedSavedArticle.length,
-  //         updatedSavedArticle
-  //       );
-  //       settingSavedArticles(updatedSavedArticle);
-  //     }
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  // };
-
-  // console.log(articles);
-
   const handleSaveNews = async (article) => {
     if (loggedIn) {
       const isArticleSaved = savedArticles.some(
         (newsCard) => newsCard.link === article.url
       );
 
-      console.log(isArticleSaved);
       try {
         if (isArticleSaved) {
           // If article is already saved, delete i
@@ -336,7 +299,7 @@ function App() {
                     return artcl;
                   }
                 });
-                console.log("........====", updatedArt);
+
                 setArticles(updatedArt);
                 localStorage.setItem("articles", JSON.stringify(updatedArt));
 
@@ -346,18 +309,14 @@ function App() {
             .catch((err) => {
               console.error("Error while saving article.", err);
             });
-          // const savedArticle = await postNewsItems(updatedArt);
-
-          // console.log("savedArticles ======>>>>", savedArticle);
-
-          // const updatedSavedArticle = [...savedArticles, updatedArt];
-          // settingSavedArticles(updatedSavedArticle);
         }
       } catch (error) {
         console.error("Error while handling save news:", error);
         // Handle the error as needed, e.g., show an error message to the user
       }
     } else {
+      setActiveModal("userLogin");
+
       setLoggedIn(false);
     }
   };
@@ -390,7 +349,6 @@ function App() {
     setEmailNotFoundError("");
   };
 
-  console.log("searched", searched);
   //-- HANDLE SEARCH FORM --//
   const handleSearchNews = async (searchInput) => {
     // SEARCHED TRUE

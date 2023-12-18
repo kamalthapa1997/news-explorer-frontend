@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import { useFormAndValidation } from "../FormValidation/FormAndValidation";
 
 const LoginModal = ({
   handleModalClose,
@@ -7,44 +8,13 @@ const LoginModal = ({
   userSignInAccount,
   emailNotFoundError,
 }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  // ERROR HANDLING
-  const validateForm = () => {
-    let isValid = true;
-
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      isValid = false;
-      setEmailError("Please enter a valid email address");
-    } else {
-      setEmailError("");
-    }
-
-    if (!password || password.length < 2 || password.length > 20) {
-      isValid = false;
-      setPasswordError("Password must be between 2 and 30 characters");
-    } else {
-      setPasswordError("");
-    }
-    return isValid;
-  };
-  // Error handling
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const { values, handleChange, errors, isValid } = useFormAndValidation();
 
   const loginSubmit = (e) => {
     e.preventDefault();
-    if (validateForm({ email, password })) {
+
+    if (isValid) {
+      const { email, password } = values;
       userSignInAccount({ email, password });
     } else {
       console.error("Invalid Email or Password");
@@ -61,21 +31,23 @@ const LoginModal = ({
       handleRegisterModal={handleRegisterModal}
       onSubmit={loginSubmit}
       emailNotFoundError={emailNotFoundError}
+      isValid={isValid}
     >
       <label className="popupwithform__label">
         Email
         <input
           className="popupwithform__input"
-          type="email>"
+          type="email"
           name="email"
           minLength={2}
-          placeholder="Enter email"
+          placeholder="Enter"
           id="email"
-          value={email}
-          onChange={handleEmailChange}
+          value={values.email || ""}
+          onChange={handleChange}
+          required
         />
       </label>
-      <span className="popupwithform__error">{emailError}</span>
+      <span className="popupwithform__error">{errors.email}</span>
 
       <label className="popupwithform__label">
         Password
@@ -84,12 +56,14 @@ const LoginModal = ({
           id="password"
           type="password"
           name="password"
+          minLength={2}
           placeholder="Enter password"
-          value={password}
-          onChange={handlePasswordChange}
+          value={values.password || ""}
+          onChange={handleChange}
+          required
         />
       </label>
-      <span className="popupwithform__error">{passwordError} </span>
+      <span className="popupwithform__error">{errors.password} </span>
     </PopupWithForm>
   );
 };

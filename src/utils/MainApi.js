@@ -1,7 +1,7 @@
-import { BASE_URL } from "./Api";
-import { response } from "./auth";
+import { SERVER__URL } from "./Api";
+import { checkResponse } from "./auth";
 export async function registerNewUser({ email, password, userName }) {
-  const res = await fetch(`${BASE_URL}/signup`, {
+  const res = await fetch(`${SERVER__URL}/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -13,12 +13,12 @@ export async function registerNewUser({ email, password, userName }) {
       password: password,
     }),
   });
-  return response(res);
+  return checkResponse(res);
 }
 
 // SIGNIN
 export async function userSignIn({ email, password }) {
-  const res = await fetch(`${BASE_URL}/signin`, {
+  const res = await fetch(`${SERVER__URL}/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -29,5 +29,5 @@ export async function userSignIn({ email, password }) {
       password: password,
     }),
   });
-  return response(res);
+  return checkResponse(res);
 }

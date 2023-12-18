@@ -53,7 +53,7 @@ const NewsCards = ({ articles, handleSaveNews, searched }) => {
               onClick={showMore}
               className={` ${
                 articles.length
-                  ? articles.length > 3
+                  ? articles.length > 3 && !(visibleCount > articles.length)
                     ? "newscards__showmore"
                     : "newscards__hidden"
                   : "newscards__hidden"

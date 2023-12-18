@@ -1,4 +1,4 @@
-export const BASE_URL =
+export const SERVER__URL =
   process.env.NODE_ENV === "production"
     ? "https://api.newsofworld.twilightparadox.com"
     : "http://localhost:3000";
@@ -16,11 +16,13 @@ const getToken = (token) => {
 export const processResponse = (res) => {
   if (res.ok) {
     return res.json();
+  } else {
+    return Promise.reject(`Error ${res.status}`);
   }
 };
 
 export async function getNewsItems(token) {
-  const res = await fetch(`${BASE_URL}/articles`, {
+  const res = await fetch(`${SERVER__URL}/articles`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -34,7 +36,7 @@ export async function getNewsItems(token) {
 }
 
 export async function postNewsItems(article) {
-  const res = await fetch(`${BASE_URL}/articles/`, {
+  const res = await fetch(`${SERVER__URL}/articles/`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -55,7 +57,7 @@ export async function postNewsItems(article) {
 }
 
 export async function deleteSaveCard(id) {
-  const res = await fetch(`${BASE_URL}/articles/${id}`, {
+  const res = await fetch(`${SERVER__URL}/articles/${id}`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
