@@ -1,6 +1,7 @@
 import { SERVER__URL } from "./Api";
 
 // SIGNUP
+
 export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
