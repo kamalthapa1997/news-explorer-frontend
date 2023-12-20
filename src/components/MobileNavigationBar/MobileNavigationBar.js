@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./MobileNavigationBar.css";
+import logoutBtnWhite from "../../images/logout.svg";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
+
 const MobileNavigationBar = ({
+  handleSignOut,
   handleLoginModal,
   loggedIn,
   handleCloseMenuBar,
-  handleIsSaved,
+  handleMobileIsSaved,
 }) => {
+  const currentUserContextValue = useContext(CurrentUserContext);
+  const currentUser =
+    currentUserContextValue.currentUserContextValue.currentUser;
+
   return (
     <div className="mobilenavigationbar">
       <div className="mobilenavigationbar__menu">
@@ -15,10 +24,9 @@ const MobileNavigationBar = ({
 
         {loggedIn ? (
           <div className="mobilenavigationbar__header ">
-            <Link className="navigation__home-link" to="/">
+            <Link className="mobilenavigationbar__home-link" to="/">
               <p
                 onClick={() => {
-                  // handleIsSaved();
                   handleCloseMenuBar();
                 }}
                 className="mobilenavigationbar__home"
@@ -28,25 +36,33 @@ const MobileNavigationBar = ({
             </Link>
             <Link
               onClick={() => {
-                handleIsSaved();
+                handleMobileIsSaved();
                 handleCloseMenuBar();
               }}
               className="mobilenavigationbar__savednews-link"
-              to="/saved-news"
+              to="/articles"
             >
               <p className="mobilenavigationbar__saved-article ">
                 {" "}
                 Saved articles
               </p>
             </Link>
-            <div className="mobilenavigationbar__profile">
-              <p className="mobilenavigationbar__username">Elise</p>
-              <button className="mobilenavigationbar__logout-btn"></button>
-            </div>
+            <button
+              onClick={handleSignOut}
+              className={`mobilenavigationbar__profile `}
+            >
+              {currentUser.name}
+              <img
+                src={logoutBtnWhite}
+                alt="Logout Icon"
+                // FIX
+                className="mobilenavigationbar__logout-logo"
+              />
+            </button>
           </div>
         ) : (
           <div className="mobilenavigationbar__infos">
-            <Link to="/">
+            <Link className="mobilenavigationbar__home-link" to="/">
               <p className="mobilenavigationbar__home"> Home</p>
             </Link>
             <button

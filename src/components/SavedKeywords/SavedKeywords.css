@@ -1,0 +1,30 @@
+.savedkeywords__keywords {
+  margin: 0;
+  color: #1a1b22;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  padding-top: 30px;
+  max-width: 712px;
+}
+
+.savedkeywords__keyword {
+  /* color: #1a1b22;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal; */
+  font-weight: 700;
+  /* line-height: 24px; */
+}
+@media (max-width: 767px) {
+  .savedkeywords__keywords {
+    padding-top: 50px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .savedkeywords__keywords {
+    padding-top: 16px;
+  }
+}

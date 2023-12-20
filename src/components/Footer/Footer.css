@@ -8,7 +8,7 @@
 .footer__texts {
   margin: 0;
   color: var(--simulator-gray-text, #b6bcbf);
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -21,7 +21,7 @@
 .footer__subtext {
   color: var(--main-primary, #1a1b22);
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", Arial;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -43,6 +43,10 @@
   gap: 40px;
 }
 
+.footer__links {
+  text-decoration: none;
+}
+
 @media (max-width: 767px) {
   .footer__infos {
     flex-direction: column-reverse;
@@ -50,22 +54,24 @@
     justify-content: flex-start;
     padding: 0;
     height: auto;
-    gap: 38px;
+    gap: 40px;
   }
   .footer__subtexts {
     width: 200px;
     height: 74px;
-    /* display: flex; */
+
     flex-direction: column;
     place-items: flex-start;
     justify-content: space-between;
     gap: unset;
-    /* padding: 20px 0 38px 16px; */
   }
   .footer__sublinks {
     gap: 16px;
     height: auto;
     align-items: baseline;
+    width: 100%;
+    justify-content: center;
+    padding-top: 20px;
   }
   .footer__texts {
     padding-bottom: 22px;
@@ -74,5 +80,6 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .footer__infos {
     padding: 0 40px;
+    max-height: 64px;
   }
 }

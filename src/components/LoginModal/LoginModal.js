@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
-const LoginModal = ({ handleModalClose, handleRegisterModal }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
-  const handleEmailChange = (e) => {
-    console.log(e.target.value);
-    setEmail(e.target.value);
-  };
+const LoginModal = ({
+  handleModalClose,
+  handleRegisterModal,
+  userSignInAccount,
+  emailNotFoundError,
+}) => {
+  const { values, handleChange, errors, isValid } = useFormAndValidation();
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const onSubmit = (e) => {
+  const loginSubmit = (e) => {
     e.preventDefault();
 
-    console.log(email, password);
-    handleModalClose();
+    if (isValid) {
+      const { email, password } = values;
+      userSignInAccount({ email, password });
+    } else {
+      console.error("Invalid Email or Password");
+    }
   };
 
   return (
@@ -26,35 +27,43 @@ const LoginModal = ({ handleModalClose, handleRegisterModal }) => {
       title="Sign in"
       buttonText="Sign in"
       linkToRegOrLogin="Sign up"
+      name="login"
       handleRegisterModal={handleRegisterModal}
-      onSubmit={onSubmit}
+      onSubmit={loginSubmit}
+      emailNotFoundError={emailNotFoundError}
+      isValid={isValid}
     >
-      <label className="modal__label">
+      <label className="popupwithform__label">
         Email
         <input
-          className="modal__input"
-          type="email>"
+          className="popupwithform__input"
+          type="email"
           name="email"
           minLength={2}
-          placeholder="Email"
+          placeholder="Enter"
           id="email"
-          value={email}
-          onChange={handleEmailChange}
+          value={values.email || ""}
+          onChange={handleChange}
+          required
         />
       </label>
-      <label className="modal__label">
+      <span className="popupwithform__error">{errors.email}</span>
+
+      <label className="popupwithform__label">
         Password
         <input
-          className="modal__input"
+          className="popupwithform__input"
           id="password"
           type="password"
           name="password"
           minLength={2}
-          placeholder="password"
-          value={password}
-          onChange={handlePasswordChange}
+          placeholder="Enter password"
+          value={values.password || ""}
+          onChange={handleChange}
+          required
         />
       </label>
+      <span className="popupwithform__error">{errors.password} </span>
     </PopupWithForm>
   );
 };

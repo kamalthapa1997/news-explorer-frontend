@@ -1,19 +1,24 @@
-import { useEffect } from "react";
 import "./MobileMenuBar.css";
-const MobileMenuBar = ({ handleMenuBar, menuBarOpen, isSaved }) => {
+import currentPageContext from "../../contexts/CurrentLocationContext";
+import { useContext } from "react";
+
+const MobileMenuBar = ({ handleMenuBar, menuBarOpen }) => {
   const setMenuIcon = menuBarOpen ? "mobilemenubar__close-icon" : "";
-  console.log(isSaved, "menubar");
-  console.log("menubar ", menuBarOpen);
+  const currentPage = useContext(currentPageContext);
 
   return (
-    <>
+    <div className="mobilemenubar">
       <button
-        className={` ${isSaved ? "" : "mobilemenubar__icon"} ${setMenuIcon}`}
+        className={`mobilemenubar__icon   ${
+          currentPage.currentPage === "/articles"
+            ? "mobilemenubar__icon-dark"
+            : "mobilemenubar__icon-white"
+        } ${setMenuIcon}`}
         onClick={handleMenuBar}
       >
         {" "}
       </button>
-    </>
+    </div>
   );
 };
 
