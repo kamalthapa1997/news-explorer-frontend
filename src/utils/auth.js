@@ -2,12 +2,17 @@ import { SERVER__URL } from "./Api";
 
 // SIGNUP
 
-export const checkResponse = (res) => {
+export const checkResponse = async (res) => {
   if (res.ok) {
-    return res.json();
+    try {
+      return await res.json();
+    } catch (jsonError) {
+      return Promise.reject(
+        `Error parsing response JSON: ${jsonError.message}`
+      );
+    }
   } else {
-    console.error(`Error ${res.status}`);
-    return res.status;
+    return Promise.reject(`${res.statusText} ${res.status}`);
   }
 };
 

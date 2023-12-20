@@ -1,6 +1,6 @@
 import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
-import { useFormAndValidation } from "../FormValidation/FormAndValidation";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 const LoginModal = ({
   handleModalClose,

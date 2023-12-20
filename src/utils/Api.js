@@ -1,3 +1,4 @@
+import { checkResponse } from "./auth";
 export const SERVER__URL =
   process.env.NODE_ENV === "production"
     ? "https://api.newsofworld.twilightparadox.com"
@@ -13,14 +14,6 @@ const getToken = (token) => {
   }
 };
 
-export const processResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Error ${res.status}`);
-  }
-};
-
 export async function getNewsItems(token) {
   const res = await fetch(`${SERVER__URL}/articles`, {
     method: "GET",
@@ -30,7 +23,7 @@ export async function getNewsItems(token) {
     },
   });
 
-  const data = await processResponse(res);
+  const data = await checkResponse(res);
 
   return data;
 }
@@ -52,7 +45,7 @@ export async function postNewsItems(article) {
       image: article.urlToImage || article.url,
     }),
   });
-  const data = await processResponse(res);
+  const data = await checkResponse(res);
   return data;
 }
 
@@ -67,6 +60,6 @@ export async function deleteSaveCard(id) {
       id,
     }),
   });
-  const data = await processResponse(res);
+  const data = await checkResponse(res);
   return data;
 }

@@ -60,7 +60,7 @@ function App() {
 
   // Get Token
 
-  console.log("Length of articles =", articles.length);
+  // console.log("Length of articles =", articles.length);
   const location = useLocation();
   // const currentLocation = location.pathname;
 
@@ -89,42 +89,45 @@ function App() {
     setLoggedIn,
   };
 
-  const userSignInAccount = ({ email, password }) => {
+  const userSignInAccount = async ({ email, password }) => {
     try {
-      mainapi.userSignIn({ email, password }).then((data) => {
-        if (data.token) {
-          localStorage.setItem("jwt", data.token);
-          handleTokenCheck(data.token);
-          setToken(data.token);
-          handleModalClose();
+      const data = await mainapi.userSignIn({ email, password });
+
+      if (data.token) {
+        setEmailNotFoundError("");
+        localStorage.setItem("jwt", data.token);
+        handleTokenCheck(data.token);
+        setToken(data.token);
+        handleModalClose();
+      } else {
+        console.log("ssdsa");
+        if (isSignInModalOpen) {
+          setEmailNotFoundError("Incorrect email or password.");
         } else {
-          if (isSignInModalOpen) {
-            setEmailNotFoundError("Incorrect email or password.");
-          } else {
-            setEmailNotFoundError("");
-          }
+          setEmailNotFoundError("");
         }
-      });
+      }
     } catch (error) {
       console.error(error);
+      setEmailNotFoundError("Incorrect email or password.");
     }
   };
 
-  const userSignUpAccount = ({ email, password, userName }) => {
+  const userSignUpAccount = async ({ email, password, userName }) => {
     try {
-      mainapi.registerNewUser({ email, password, userName }).then((data) => {
-        if (data.email) {
-          handleModalClose();
+      const data = await mainapi.registerNewUser({ email, password, userName });
+      if (data.email) {
+        handleModalClose();
+      } else {
+        if (isSignUpModalOpen) {
+          setEmailNotFoundError("This email is not available");
         } else {
-          if (isSignUpModalOpen) {
-            setEmailNotFoundError("This email is not available");
-          } else {
-            setEmailNotFoundError("");
-          }
+          setEmailNotFoundError("");
         }
-      });
+      }
     } catch (error) {
       console.error(error);
+      setEmailNotFoundError("This email is not available");
     }
   };
 

@@ -1,5 +1,6 @@
 import { SERVER__URL } from "./Api";
-import { processResponse } from "./Api";
+
+import { checkResponse } from "./auth";
 const KEY = "0028693c676a4e198749bf8d99088f91";
 const BASEAPI_URL = `https://newsapi.org`;
 const SERVERAPI_URL = "https://nomoreparties.co";
@@ -32,14 +33,12 @@ export async function getArticles(query) {
       ? `${SERVERAPI_URL}/news/v2/top-headlines?country=us&q=${query}`
       : `${BASEAPI_URL}/v2/everything?q=${query}`;
 
-  // const baseUrl = `${SERVERAPI_URL}/news/v2/top-headlines?country=us&q=${query}`;
-
   const fullUrl = `${baseUrl}${commonParams}`;
 
   // Fetch data from the API
   const res = await fetch(fullUrl);
 
   // Process the API response
-  const data = processResponse(res);
+  const data = checkResponse(res);
   return data;
 }

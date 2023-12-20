@@ -1,5 +1,5 @@
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
-import { useFormAndValidation } from "../FormValidation/FormAndValidation";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 const RegisterModal = ({
   handleModalClose,
