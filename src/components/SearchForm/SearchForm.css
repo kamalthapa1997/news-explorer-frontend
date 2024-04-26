@@ -1,0 +1,95 @@
+.searchform {
+  position: relative;
+
+  width: 608px;
+}
+.searchform__input {
+  border: none;
+  padding: 0;
+  border-radius: 100px;
+  height: 64px;
+  box-sizing: border-box;
+  padding: 21px 208px 21px 24px;
+  width: 608px;
+  color: var(--main-primary, #1a1b22);
+  font-family: "Roboto", Arial;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+}
+.searchform__input::placeholder {
+  color: var(--simulator-gray-text, #b6bcbf);
+}
+.searchform__button {
+  width: 168px;
+  background: #2f71e5;
+  box-shadow: 0px 5px 15px 0px rgba(14, 26, 57, 0.2);
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 64px;
+
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+}
+.searchform__button:hover {
+  background: #347eff;
+  /* box-shadow: 0px 5px 15px 0px rgba(14, 26, 57, 0.2); */
+}
+.searchform__button:active {
+  background: #2a65cc;
+}
+
+@media (max-width: 767px) {
+  .searchform {
+    padding-bottom: 32px;
+    padding-top: 122px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 288px;
+  }
+  .searchform__input {
+    width: 100%;
+    height: 56px;
+    padding: 0;
+    padding: 17px 16px;
+  }
+  .searchform__button {
+    width: 100%;
+    position: unset;
+    height: 56px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .searchform {
+    width: 452px;
+  }
+  .searchform__input {
+    width: 448px;
+    height: 56px;
+  }
+
+  .searchform__button {
+    width: 160px;
+    height: 56px;
+  }
+}
+@media (min-width: 1024px) {
+  .appBody {
+    width: 100%;
+  }
+  /* Your laptop/desktop-specific CSS rules go here */
+}

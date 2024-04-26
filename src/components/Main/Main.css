@@ -1,0 +1,81 @@
+.main {
+  box-sizing: border-box;
+  padding-top: 160px;
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: url("../../images/bgimage.png") no-repeat center;
+  width: 100%;
+}
+.main__headings {
+  width: 608px;
+  margin: 0;
+  color: var(--main-white, #fff);
+  font-family: "Roboto Slab", Arial;
+
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 64px; /* 106.667% */
+}
+.main__textcontent {
+  padding-top: 32px;
+  color: var(--main-white, #fff);
+  font-family: "Roboto", Arial;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+  padding-bottom: 88px;
+}
+
+@media (max-width: 767px) {
+  .main {
+    padding-top: 86px;
+    padding-bottom: 0;
+  }
+  .main__headings {
+    width: 285px;
+    font-size: 36px;
+
+    line-height: 40px; /* 111.111% */
+  }
+  .main__textcontent {
+    width: 288px;
+    padding: 16px 0 0 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main {
+    /* padding: 104px 0 48px; */
+    align-items: flex-start;
+    padding: 104px 156px 48px 160px;
+  }
+  .main__headings {
+    font-size: 36px;
+    line-height: 111.111%;
+    width: 452px;
+    height: 80px;
+    padding-left: 3px;
+  }
+  .main__textcontent {
+    width: 452px;
+    padding-top: 16px;
+    padding-bottom: 48px;
+  }
+
+  .main__search-button {
+    width: 160px;
+    height: 56px;
+  }
+}
+@media (min-width: 1024px) {
+  .appBody {
+    width: 100%;
+  }
+  /* Your laptop/desktop-specific CSS rules go here */
+}

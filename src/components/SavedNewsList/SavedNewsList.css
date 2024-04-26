@@ -1,0 +1,22 @@
+/* .savednewslist {
+  background-color: #f5f6f7;
+  padding: 62px 104px;
+}
+
+.savednewslist__articles {
+  justify-content: flex-start;
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .savednewslist__articles {
+    margin: 0 auto;
+    width: calc(100% - 80px);
+    gap: 8px;
+  }
+} */

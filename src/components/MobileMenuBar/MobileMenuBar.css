@@ -1,0 +1,28 @@
+.mobilemenubar__icon {
+  border: none;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+  padding: 0;
+  right: 16px;
+  top: 16px;
+  transition: background 0.5s linear;
+  visibility: hidden;
+}
+.mobilemenubar__icon-dark {
+  background: url("../../images/menu-dark.svg") no-repeat center;
+}
+
+.mobilemenubar__icon-white {
+  background: url("../../images/mobilemenubar.svg") no-repeat center;
+}
+@media (max-width: 767px) {
+  .mobilemenubar__icon {
+    visibility: visible;
+  }
+}
+.mobilemenubar__close-icon {
+  background: url("../../images/menucloseicon.svg") no-repeat center;
+  transition: background 0.5s linear;
+}

@@ -1,0 +1,154 @@
+.newscards__searchtexts {
+  width: 712px;
+  margin: 0;
+  padding-top: 80px;
+  padding-left: 104px;
+  color: var(--main-primary, #1a1b22);
+  font-family: "Roboto Slab", Arial;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.newscards__newslists {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+}
+.newscards__showmore {
+  margin: 0;
+  color: var(--main-primary, #1a1b22);
+  text-align: center;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  width: 240px;
+  height: 56px;
+  border-radius: 80px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+}
+.newscards__showmore:hover {
+  opacity: 0.9;
+  background: var(--main-white-hover, #e8e8e8);
+}
+.newscards__searchlist {
+  background: #f5f6f7;
+}
+.newscards__articles {
+  justify-content: center;
+  display: flex;
+  column-gap: 16px;
+  row-gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 62px;
+  padding-bottom: 62px;
+  align-items: center;
+  background-color: #f5f6f7;
+}
+
+/* .newscards__titles {
+  color: var(--main-primary, #1a1b22);
+  font-family: " Roboto Slab", Arial;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  padding-left: 16px;
+  padding-bottom: 32px;
+} */
+
+/* .newscards__delete {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 10px;
+} */
+
+.newscards__hidden {
+  display: none;
+}
+
+.newscards__notfound {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /* padding-top: 16px; */
+  height: 374px;
+}
+.newscards__nothing-found {
+  padding-top: 31.5px;
+
+  color: var(--main-primary, #1a1b22);
+  text-align: center;
+  font-family: "Roboto Slab", Arial;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115.385%;
+  margin: 0;
+}
+.newscards__notfound-logo {
+  max-width: 90px;
+}
+.newscards__notfound-text {
+  color: var(--simulator-gray-text, #b6bcbf);
+  text-align: center;
+  font-family: "Roboto", Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 133.333%;
+  margin: 0;
+  padding-top: 16px;
+  width: 250px;
+}
+
+@media (max-width: 767px) {
+  .newscards__searchtexts {
+    padding: 32px 0 0 16px;
+    font-size: 30px;
+    width: 288px;
+    height: 34px;
+  }
+
+  .newscards__articles {
+    gap: 10px;
+    padding-bottom: 21px;
+  }
+  .newscards__showmore {
+    width: 288px;
+  }
+  .newscards__newslists {
+    padding-bottom: 24px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .newscards__searchtexts {
+    width: 336px;
+    padding: 40px 0 0 40px;
+
+    font-size: 30px;
+  }
+
+  .newscards__articles {
+    max-width: 768px;
+    margin: auto;
+    padding-top: 32px;
+    gap: 8px;
+  }
+}
+@media (min-width: 1024px) {
+  /* Your laptop/desktop-specific CSS rules go here */
+}
